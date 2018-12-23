@@ -1,0 +1,2 @@
+websockets==7.0
+war3structs

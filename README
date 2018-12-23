@@ -1,0 +1,26 @@
+war3observer
+-----------------
+
+war3observer is a tool that keeps a local webpage updated data from
+the Warcraft III observer API. This can be used for streaming tools
+such as OBS to render the data on stream.
+
+It runs a local websocket server which sends a message with the entire
+game's state (if you are in a game) periodically. It uses war3structs
+to parse the state from the memory mapped file.
+
+war3structs: https://github.com/warlockbrawl/war3structs
+
+
+Status
+-----------------
+
+Currently, the "client" is just an html file that renders the json from
+the websocket server in a <pre> tag. The intention is to add a nice
+mithril.js interface (lightweight javascript ui framework) to render
+the state in a nicer way while also being customizable with component
+inheritance and CSS overrides.
+
+A tool will exist in this repository to extract all icons from an
+installation's CASC data and put them into a directory named by their
+in-game id.
