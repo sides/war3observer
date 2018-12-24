@@ -1,13 +1,18 @@
-#!/usr/bin/env python
-
 import asyncio
-import websockets
-import json
 import mmap
 
 from war3structs.observer import ObserverGame, ObserverPlayer
+from .utils import Event
 
 class SharedMemoryFile():
+  """SharedMemoryFile class
+
+  This opens a memory mapped file at the specified offset with the
+  specified size, but takes care of having the offset conform to the
+  ALLOCATIONGRANULARITY for you. Read the entire file with the data()
+  method.
+  """
+
   def __init__(self, offset, size):
     self._seek_offset = offset % mmap.ALLOCATIONGRANULARITY
     self._mmap = mmap.mmap(
@@ -24,7 +29,15 @@ class SharedMemoryFile():
   def close(self):
     self._mmap.close()
 
+
 class Game():
+  """Game class
+
+  A game updates the state from the observer API. It also compares
+  states for you, dispatching special events when it detects in-game
+  actions such as a new spell being trained.
+  """
+
   _game_size = ObserverGame.sizeof()
   _player_size = ObserverPlayer.sizeof()
 
@@ -36,17 +49,6 @@ class Game():
     parsed = ObserverGame.parse(self._game_mm.data())
     del parsed._io
     return parsed
-
-  def _close_players(self):
-    for mm in self._player_mms:
-      mm.close()
-    self._player_mms = []
-
-  def close(self):
-    if not self._game_mm is None:
-      self._game_mm.close()
-      self._game_mm = None
-    self._close_players()
 
   async def _get_player_state(self, index):
     player = ObserverPlayer.parse(self._player_mms[index].data())
@@ -82,43 +84,41 @@ class Game():
 
     return player
 
-  async def get_state(self):
+  def _close_players(self):
+    for mm in self._player_mms:
+      mm.close()
+    self._player_mms = []
+
+  def close(self):
+    """Close the game's file handles and clear events"""
+
+    if not self._game_mm is None:
+      self._game_mm.close()
+      self._game_mm = None
+
+    self._close_players()
+
+  async def update(self):
+    """Update the game state"""
+
     if self._game_mm is None:
       self._game_mm = SharedMemoryFile(4, self._game_size)
 
     game_state = await self._get_game_state()
-    player_states = []
 
-    if game_state['is_in_game']:
-      if len(self._player_mms) != game_state['players_count']:
-        self._close_players()
-        for i in range(0, game_state['players_count']):
-          mm = SharedMemoryFile(4+self._game_size+self._player_size*i, self._player_size)
-          self._player_mms.append(mm)
+    if not game_state['is_in_game']:
+      return dict(game=game_state, players=[])
 
-      tasks = []
-      for index, mm in enumerate(self._player_mms):
-        tasks.append(self._get_player_state(index))
+    if len(self._player_mms) != game_state['players_count']:
+      self._close_players()
+      for i in range(0, game_state['players_count']):
+        mm = SharedMemoryFile(4+self._game_size+self._player_size*i, self._player_size)
+        self._player_mms.append(mm)
 
-      player_states = await asyncio.gather(*tasks)
+    tasks = []
+    for index, mm in enumerate(self._player_mms):
+      tasks.append(self._get_player_state(index))
+
+    player_states = await asyncio.gather(*tasks)
 
     return dict(game=game_state, players=player_states)
-
-async def send_state(websocket, path):
-  game = Game()
-
-  try:
-    while True:
-      state = await game.get_state()
-      await websocket.send(json.dumps(state, default=lambda o: None, indent=2))
-      await asyncio.sleep(2)
-  except:
-    raise
-  finally:
-    game.close()
-
-if __name__ == '__main__':
-  start_server = websockets.serve(send_state, 'localhost', 8765)
-
-  asyncio.get_event_loop().run_until_complete(start_server)
-  asyncio.get_event_loop().run_forever()
