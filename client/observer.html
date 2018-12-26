@@ -9,7 +9,7 @@
         const pre = document.createElement('pre');
         document.body.appendChild(pre);
         ws.onmessage = function (event) {
-          pre.innerHTML = event.data;
+          pre.innerHTML = JSON.stringify(JSON.parse(event.data), null, 4);
         };
     </script>
   </body>

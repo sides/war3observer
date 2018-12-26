@@ -2,7 +2,6 @@ import asyncio
 import mmap
 
 from war3structs.observer import ObserverGame, ObserverPlayer
-from .utils import Event
 
 class SharedMemoryFile():
   """SharedMemoryFile class
@@ -33,9 +32,7 @@ class SharedMemoryFile():
 class Game():
   """Game class
 
-  A game updates the state from the observer API. It also compares
-  states for you, dispatching special events when it detects in-game
-  actions such as a new spell being trained.
+  A game updates the state from the observer API.
   """
 
   _game_size = ObserverGame.sizeof()
@@ -82,9 +79,12 @@ class Game():
     for unit in player.units_on_map:
       del unit._io
 
+    for research in player.researches_in_progress:
+      del research._io
+
     return player
 
-  def _close_players(self):
+  def _clear_players(self):
     for mm in self._player_mms:
       mm.close()
     self._player_mms = []
@@ -96,7 +96,7 @@ class Game():
       self._game_mm.close()
       self._game_mm = None
 
-    self._close_players()
+    self._clear_players()
 
   async def update(self):
     """Update the game state"""
@@ -110,7 +110,7 @@ class Game():
       return dict(game=game_state, players=[])
 
     if len(self._player_mms) != game_state['players_count']:
-      self._close_players()
+      self._clear_players()
       for i in range(0, game_state['players_count']):
         mm = SharedMemoryFile(4+self._game_size+self._player_size*i, self._player_size)
         self._player_mms.append(mm)

@@ -19,11 +19,7 @@ class Server():
     try:
       while True:
         state = await self.game.update()
-        message = {
-          'type': 'state',
-          'content': state
-        }
-        await websocket.send(json.dumps(message, default=lambda o: None, indent=2))
+        await websocket.send(json.dumps(state, default=lambda o: None, separators=(',', ':')))
         await asyncio.sleep(2)
     except:
       raise
