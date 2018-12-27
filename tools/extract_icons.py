@@ -37,7 +37,7 @@ def jpgblp2jpg(data):
   stream.seek(first_mipmap_offset)
   jpg_data = stream.read(first_mipmap_size)
 
-  return jpg_h + jpg_data
+  return flipbgrrgb(jpg_h + jpg_data)
 
 def extract_icons(installation_dir, out_dir):
   included = [
@@ -76,7 +76,7 @@ def extract_icons(installation_dir, out_dir):
     blp_data = wc3.read('war3.mpq:%s' % path.lower())
 
     with open(out_path, 'wb') as fh:
-      fh.write(flipbgrrgb(jpgblp2jpg(blp_data)))
+      fh.write(jpgblp2jpg(blp_data))
 
 def main():
   try:
