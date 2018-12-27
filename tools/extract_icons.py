@@ -68,12 +68,6 @@ def extract_icons(installation_dir, out_dir):
         icons[section] = art
         continue
 
-      art = config[section].get('Buffart', None)
-      if not art is None and len(art.strip()) > 0:
-        art = art.split(',')[0]
-        icons[section] = art
-        continue
-
   print('Extracting icons...')
 
   for id_, path in icons.items():
