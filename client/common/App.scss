@@ -1,0 +1,86 @@
+$teamColors: () !default;
+$teamColors: map-merge(
+  (
+    "red":        #ff0303,
+    "blue":       #0042ff,
+    "teal":       #1ce6b9,
+    "purple":     #540081,
+    "yellow":     #fffc00,
+    "orange":     #fe8a0e,
+    "green":      #20c000,
+    "pink":       #e55bb0,
+    "gray":       #959697,
+    "light-blue": #7ebff1,
+    "dark-green": #106246,
+    "brown":      #4e2a04,
+    "maroon":     #9b0000,
+    "navy":       #0000c3,
+    "turquoise":  #00eaff,
+    "violet":     #be00fe,
+    "wheat":      #ebcd87,
+    "peach":      #f8a48b,
+    "mint":       #bfff80,
+    "lavender":   #dcb9eb,
+    "coal":       #282828,
+    "snow":       #ebf0ff,
+    "emerald":    #00781e,
+    "peanut":     #a46f33
+  ),
+  $teamColors
+);
+
+$font-family-base:   'Friz Quadrata', serif !default;
+$font-size-base:     16px !default;
+$line-height-base:   1.5 !default;
+$body-color:         #fff !default;
+$body-bg:            #222 !default;
+
+@function color-yiq($color) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+  @if ($yiq >= 150) {
+    @return #111;
+  } @else {
+    @return #fff;
+  }
+}
+
+@font-face {
+  font-family: 'Friz Quadrata';
+  src: url('../assets/fonts/frizqt.woff2') format('woff2');
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $body-color;
+  background-color: $body-bg;
+}
+
+@each $team, $color in $teamColors {
+  .color-team-#{$team} {
+    color: $color;
+  }
+
+  .bg-team-#{$team} {
+    background-color: $color;
+    color: color-yiq($color);
+  }
+}
