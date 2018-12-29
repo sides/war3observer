@@ -2,13 +2,13 @@ import argparse
 import json
 import os
 
-from .server import Server
+from war3observer import __version__, Server
 
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('--version',
     action='version',
-    version='%(prog)s 0.1.0-beta')
+    version='war3observer %s' % __version__)
   parser.add_argument('--config',
     default='./war3observer.config.json',
     help='the path to a config file to use')
