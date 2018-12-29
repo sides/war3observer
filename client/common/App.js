@@ -1,5 +1,6 @@
-import * as m from 'mithril';
 import './App.scss';
+
+import * as m from 'mithril';
 
 export default class App {
   constructor() {
@@ -23,7 +24,6 @@ export default class App {
 
   onmessage(event) {
     const data = JSON.parse(event.data);
-    console.log(data);
 
     switch (data.type) {
       case 'state':

@@ -1,7 +1,7 @@
-import CamoResourcePanelComponent from '../../common/components/CamoResourcePanelComponent';
-import App from '../../common/App';
+import CamoApp from '../../camo/CamoApp';
+import CamoResourcePanelComponent from '../../camo/components/CamoResourcePanelComponent';
 
-const app = new App();
+const app = new CamoApp();
 
 app.addComponent(new CamoResourcePanelComponent());
 

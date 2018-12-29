@@ -1,0 +1,57 @@
+$camo-resource-panel-height:              59px !default;
+$camo-resource-panel-bg:                  url('../assets/ui/human-resource-panel.png') !default;
+$camo-resource-panel-spacing-y:           3px !default;
+$camo-resource-panel-resource-width:      134px !default;
+$camo-resource-panel-resource-height:     32px !default;
+$camo-resource-panel-resource-icon-width: 32px !default;
+$camo-resource-panel-resource-spacing-x:  23px !default;
+$camo-resource-panel-left-left:           242px !default;
+$camo-resource-panel-right-left:          1070px !default;
+
+.ResourcePanel {
+  height: $camo-resource-panel-height;
+  background: $camo-resource-panel-bg;
+  position: relative;
+}
+
+.ResourcePanel-player {
+  position: absolute;
+  top: $camo-resource-panel-spacing-y;
+  display: flex;
+
+  .Resource {
+    height: $camo-resource-panel-resource-height;
+    width: $camo-resource-panel-resource-width;
+    display: flex;
+    align-items: center;
+
+    + .Resource {
+      margin-left: $camo-resource-panel-resource-spacing-x;
+    }
+
+    .Resource-icon {
+      width: $camo-resource-panel-resource-icon-width - 2;
+      height: $camo-resource-panel-resource-height - 2;
+    }
+
+    .Resource-label {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: right;
+
+      > span {
+        color: inherit;
+      }
+    }
+  }
+
+  &.ResourcePanel--left {
+    left: $camo-resource-panel-left-left;
+  }
+
+  &.ResourcePanel--right {
+    left: $camo-resource-panel-right-left;
+  }
+}
