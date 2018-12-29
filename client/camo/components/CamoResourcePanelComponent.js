@@ -1,7 +1,6 @@
 import './CamoResourcePanelComponent.scss';
 
 import * as m from 'mithril';
-import { getPlayerColor } from '../../common/utils/color';
 import ResourcePanelComponent from '../../common/components/ResourcePanelComponent';
 
 export default class CamoResourcePanelComponent extends ResourcePanelComponent {
