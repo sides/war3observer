@@ -3,9 +3,9 @@ import { getPlayerColor } from '../utils/color';
 import Component from '../Component';
 
 export default class TeamColoredLabelComponent extends Component {
-  view() {
-    const color = getPlayerColor(this.attrs.player);
+  view(vnode) {
+    const color = getPlayerColor(vnode.attrs.player);
 
-    return <span class={`color-team-${color}`}>{this.children}</span>;
+    return <span class={`color-team-${color}`}>{vnode.children}</span>;
   }
 }

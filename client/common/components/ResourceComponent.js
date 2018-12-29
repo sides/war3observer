@@ -2,15 +2,15 @@ import * as m from 'mithril';
 import Component from '../Component';
 
 export default class ResourcePanelComponent extends Component {
-  view() {
+  view(vnode) {
     return (
-      <div class={`Resource ${this.attrs.class || ''}`}>
-        {this.attrs.icon
-          ? <img class="Resource-icon" src={this.attrs.icon} />
+      <div class={`Resource ${vnode.attrs.class || ''}`}>
+        {vnode.attrs.icon
+          ? <img class="Resource-icon" src={vnode.attrs.icon} />
           : ''
         }
         <span class="Resource-label">
-          {this.children}
+          {vnode.children}
         </span>
       </div>
     );
