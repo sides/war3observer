@@ -4,10 +4,8 @@ import Component from '../Component';
 import Resource from './ResourceComponent';
 
 export default class ResourcePanelComponent extends Component {
-  constructor(vnode) {
-    super(vnode);
-
-    this.resourceIcons = {};
+  icons() {
+    return {};
   }
 
   view() {
@@ -18,25 +16,27 @@ export default class ResourcePanelComponent extends Component {
     const p1 = app.game.players[0];
     const p2 = app.game.players[1];
 
+    const icons = this.icons();
+
     return (
       <div class="ResourcePanel">
         {[p1, p2].map(player => (
           <div class={`ResourcePanel-player ResourcePanel--${player.team_index === 0 ? 'left' : 'right'}`}>
             <Resource
-              icon={this.resourceIcons[player.race.toLowerCase()]}
+              icon={icons[player.race.toLowerCase()]}
               class={`color-team-${getPlayerColor(player)}`}>
               {player.name}
             </Resource>
 
-            <Resource icon={this.resourceIcons.gold}>
+            <Resource icon={icons.gold}>
               {player.gold}
             </Resource>
 
-            <Resource icon={this.resourceIcons.lumber}>
+            <Resource icon={icons.lumber}>
               {player.lumber}
             </Resource>
 
-            <Resource icon={this.resourceIcons.supply}>
+            <Resource icon={icons.supply}>
               {player.food}/{player.food_max}
             </Resource>
           </div>

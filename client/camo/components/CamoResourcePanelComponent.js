@@ -5,10 +5,8 @@ import { getPlayerColor } from '../../common/utils/color';
 import ResourcePanelComponent from '../../common/components/ResourcePanelComponent';
 
 export default class CamoResourcePanelComponent extends ResourcePanelComponent {
-  constructor(vnode) {
-    super(vnode);
-
-    this.resourceIcons = {
+  icons() {
+    return {
       human: require('../assets/ui/human.png'),
       orc: require('../assets/ui/orc.png'),
       nightelf: require('../assets/ui/nightelf.png'),
