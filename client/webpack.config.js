@@ -22,7 +22,6 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -34,7 +33,6 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        exclude: /node_modules/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
           { loader: 'css-loader' },
@@ -43,7 +41,6 @@ module.exports = {
       },
       {
         test:  /\.(png|jpg|gif|svg|woff2)$/,
-        exclude: /node_modules/,
         use: 'file-loader'
       }
     ]
