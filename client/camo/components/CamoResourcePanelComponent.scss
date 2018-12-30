@@ -1,12 +1,12 @@
 $camo-resource-panel-height:              59px !default;
-$camo-resource-panel-bg:                  url('../assets/ui/human-resource-panel.png') !default;
+$camo-resource-panel-bg:                  url('./assets/ui/human-resource-panel.png') !default;
 $camo-resource-panel-spacing-y:           3px !default;
 $camo-resource-panel-resource-width:      134px !default;
 $camo-resource-panel-resource-height:     32px !default;
 $camo-resource-panel-resource-icon-width: 32px !default;
 $camo-resource-panel-resource-spacing-x:  23px !default;
-$camo-resource-panel-left-left:           242px !default;
-$camo-resource-panel-right-left:          1070px !default;
+$camo-resource-panel-red-left:            242px !default;
+$camo-resource-panel-blue-left:           1070px !default;
 
 .ResourcePanel {
   height: $camo-resource-panel-height;
@@ -47,11 +47,11 @@ $camo-resource-panel-right-left:          1070px !default;
     }
   }
 
-  &.ResourcePanel--left {
-    left: $camo-resource-panel-left-left;
+  &.ResourcePanel-player--red {
+    left: $camo-resource-panel-red-left;
   }
 
-  &.ResourcePanel--right {
-    left: $camo-resource-panel-right-left;
+  &.ResourcePanel-player--blue {
+    left: $camo-resource-panel-blue-left;
   }
 }

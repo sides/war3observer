@@ -1,5 +1,3 @@
-import './CamoResourcePanelComponent.scss';
-
 import * as m from 'mithril';
 import ResourcePanelComponent from '../../common/components/ResourcePanelComponent';
 

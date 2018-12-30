@@ -1,6 +1,22 @@
+// Variables
+//
 $font-family-base: 'Friz Quadrata', serif !default;
 
+
+// Base app styles
+//
+@import "../common/App";
+
+
+// Camo specifics
+//
 @font-face {
   font-family: 'Friz Quadrata';
   src: url('./assets/fonts/frizqt.woff2') format('woff2');
 }
+
+
+// Components
+//
+@import "./components/CamoResourcePanelComponent";
+@import "./components/CamoHeroOverviewComponent";

@@ -1,0 +1,159 @@
+$hero-overview-offset-y: -11px;
+$hero-overview-offset-x: 9px;
+$hero-overview-spacing-x: 3px;
+
+$hero-overview-hero-height: 86px;
+$hero-overview-hero-spacing-y: 6px;
+$hero-overview-hero-dead-filter: grayscale(100%) brightness(50%);
+
+$hero-overview-hero-icon-width: 69px;
+$hero-overview-hero-icon-height: 68px;
+$hero-overview-hero-level-offset-y: 20px;
+$hero-overview-hero-level-offset-x: 3px;
+$hero-overview-hero-level-font-size: 22px;
+$hero-overview-hero-level-text-shadow: 2px 2px 2px rgba(#000, 0.9), -2px -2px 2px rgba(#000, 0.9);
+
+$hero-overview-ability-padding: 1px;
+$hero-overview-ability-height: $hero-overview-hero-height * .5;
+$hero-overview-ability-level-offset-y: 2px;
+$hero-overview-ability-level-offset-x: 2px;
+$hero-overview-ability-level-font-size: 16px;
+$hero-overview-ability-level-text-shadow: 2px 2px 2px rgba(#000, 0.9), -2px -2px 2px rgba(#000, 0.9);
+
+$hero-overview-item-padding: 1px;
+$hero-overview-item-height: $hero-overview-hero-height * .3334;
+$hero-overview-item-level-offset-y: 1px;
+$hero-overview-item-level-offset-x: 1px;
+$hero-overview-item-level-font-size: 14px;
+$hero-overview-item-level-text-shadow: 1px 1px 1px rgba(#000, 0.9), -1px -1px 1px rgba(#000, 0.9);
+
+.HeroOverview {
+  position: relative;
+
+  .HeroOverview-player {
+    position: absolute;
+    top: $hero-overview-offset-y;
+
+    .Hero {
+      display: flex;
+      height: $hero-overview-hero-height;
+
+      &.Hero--dead {
+        filter: $hero-overview-hero-dead-filter;
+      }
+
+      + .Hero {
+        margin-top: $hero-overview-hero-spacing-y;
+      }
+
+      .Hero-portrait {
+        position: relative;
+
+        .Hero-icon {
+          width: $hero-overview-hero-icon-width;
+          height: $hero-overview-hero-icon-height;
+        }
+
+        .Hero-level {
+          position: absolute;
+          bottom: $hero-overview-hero-level-offset-y;
+          right: $hero-overview-hero-level-offset-x;
+          font-size: $hero-overview-hero-level-font-size;
+          line-height: 1;
+          text-shadow: $hero-overview-hero-level-text-shadow;
+        }
+      }
+
+      .Hero-abilities {
+        display: flex;
+        flex-direction: column;
+        margin: -$hero-overview-ability-padding;
+
+        .Hero-ability {
+          height: $hero-overview-ability-height;
+          position: relative;
+
+          .Ability-icon {
+            padding: $hero-overview-ability-padding;
+            max-width: 100%;
+            max-height: 100%;
+          }
+
+          .Ability-level {
+            position: absolute;
+            bottom: $hero-overview-ability-level-offset-y;
+            right: $hero-overview-ability-level-offset-x;
+            font-size: $hero-overview-ability-level-font-size;
+            line-height: 1;
+            text-shadow: $hero-overview-ability-level-text-shadow;
+          }
+        }
+
+        &[data-amount="3"],
+        &[data-amount="4"] {
+          width: ($hero-overview-ability-height * 2);
+        }
+      }
+
+      .Hero-items {
+        display: flex;
+        flex-direction: column;
+        margin: -$hero-overview-item-padding;
+
+        .Hero-item {
+          height: $hero-overview-item-height;
+          position: relative;
+
+          .Item-icon {
+            padding: $hero-overview-item-padding;
+            max-width: 100%;
+            max-height: 100%;
+          }
+
+          .Item-charges {
+            position: absolute;
+            bottom: $hero-overview-item-level-offset-y;
+            right: $hero-overview-item-level-offset-x;
+            line-height: 1;
+            font-size: $hero-overview-item-level-font-size;
+            text-shadow: $hero-overview-item-level-text-shadow;
+          }
+        }
+
+        &[data-amount="4"],
+        &[data-amount="5"],
+        &[data-amount="6"] {
+          width: ($hero-overview-item-height * 2);
+        }
+      }
+    }
+
+    @each $direction in left, right {
+      $cls-infix: "red";
+      $flex-infix: "";
+
+      @if $direction == "right" {
+        $cls-infix: "blue";
+        $flex-infix: "-reverse";
+      }
+
+      &.HeroOverview-player--#{$cls-infix} {
+        #{$direction}: $hero-overview-offset-x;
+
+        .Hero {
+          flex-direction: row#{$flex-infix};
+        }
+
+        .Hero-abilities {
+          margin-#{$direction}: $hero-overview-spacing-x;
+          flex-wrap: wrap#{$flex-infix};
+        }
+
+        .Hero-items {
+          margin-#{$direction}: $hero-overview-spacing-x;
+          flex-wrap: wrap#{$flex-infix};
+        }
+      }
+    }
+  }
+}

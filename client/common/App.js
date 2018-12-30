@@ -1,5 +1,3 @@
-import './App.scss';
-
 import * as m from 'mithril';
 
 export default class App {
