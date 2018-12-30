@@ -3,6 +3,8 @@
 dist/
 build/
 *.egg-info
+*.spec
+war3observer.zip
 
 .vscode/
 *.sublime-*
