@@ -14,7 +14,7 @@ export function teamToColorName(team) {
 }
 
 export function getPlayerColor(player) {
-  return app.config.useTeamColors
+  return app.settings.useTeamColors
     ? teamToColorName(player.team_index)
     : teamToColorName(player.team_color);
 }

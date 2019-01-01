@@ -1,31 +1,31 @@
-$hero-overview-offset-y: -11px;
-$hero-overview-offset-x: 9px;
+$hero-overview-offset-y:  -11px;
+$hero-overview-offset-x:  9px;
 $hero-overview-spacing-x: 3px;
 
-$hero-overview-hero-height: 86px;
-$hero-overview-hero-spacing-y: 6px;
+$hero-overview-hero-height:      86px;
+$hero-overview-hero-spacing-y:   6px;
 $hero-overview-hero-dead-filter: grayscale(100%) brightness(50%);
 
-$hero-overview-hero-icon-width: 69px;
-$hero-overview-hero-icon-height: 68px;
-$hero-overview-hero-level-offset-y: 20px;
-$hero-overview-hero-level-offset-x: 3px;
-$hero-overview-hero-level-font-size: 22px;
+$hero-overview-hero-icon-width:        69px;
+$hero-overview-hero-icon-height:       68px;
+$hero-overview-hero-level-offset-y:    20px;
+$hero-overview-hero-level-offset-x:    3px;
+$hero-overview-hero-level-font-size:   22px;
 $hero-overview-hero-level-text-shadow: 2px 2px 2px rgba(#000, 0.9), -2px -2px 2px rgba(#000, 0.9);
 
-$hero-overview-ability-padding: 1px;
-$hero-overview-ability-height: $hero-overview-hero-height * .5;
-$hero-overview-ability-level-offset-y: 2px;
-$hero-overview-ability-level-offset-x: 2px;
-$hero-overview-ability-level-font-size: 16px;
+$hero-overview-ability-padding:           1px;
+$hero-overview-ability-height:            $hero-overview-hero-height * .5;
+$hero-overview-ability-level-offset-y:    2px;
+$hero-overview-ability-level-offset-x:    2px;
+$hero-overview-ability-level-font-size:   16px;
 $hero-overview-ability-level-text-shadow: 2px 2px 2px rgba(#000, 0.9), -2px -2px 2px rgba(#000, 0.9);
 
-$hero-overview-item-padding: 1px;
-$hero-overview-item-height: $hero-overview-hero-height * .3334;
-$hero-overview-item-level-offset-y: 1px;
-$hero-overview-item-level-offset-x: 1px;
-$hero-overview-item-level-font-size: 14px;
-$hero-overview-item-level-text-shadow: 1px 1px 1px rgba(#000, 0.9), -1px -1px 1px rgba(#000, 0.9);
+$hero-overview-item-padding:             1px;
+$hero-overview-item-height:              $hero-overview-hero-height * .3334;
+$hero-overview-item-charges-offset-y:    1px;
+$hero-overview-item-charges-offset-x:    1px;
+$hero-overview-item-charges-font-size:   14px;
+$hero-overview-item-charges-text-shadow: 1px 1px 1px rgba(#000, 0.9), -1px -1px 1px rgba(#000, 0.9);
 
 .HeroOverview {
   position: relative;
@@ -112,11 +112,11 @@ $hero-overview-item-level-text-shadow: 1px 1px 1px rgba(#000, 0.9), -1px -1px 1p
 
           .Item-charges {
             position: absolute;
-            bottom: $hero-overview-item-level-offset-y;
-            right: $hero-overview-item-level-offset-x;
+            bottom: $hero-overview-item-charges-offset-y;
+            right: $hero-overview-item-charges-offset-x;
             line-height: 1;
-            font-size: $hero-overview-item-level-font-size;
-            text-shadow: $hero-overview-item-level-text-shadow;
+            font-size: $hero-overview-item-charges-font-size;
+            text-shadow: $hero-overview-item-charges-text-shadow;
           }
         }
 
@@ -129,15 +129,15 @@ $hero-overview-item-level-text-shadow: 1px 1px 1px rgba(#000, 0.9), -1px -1px 1p
     }
 
     @each $direction in left, right {
-      $cls-infix: "red";
+      $child-infix: "first";
       $flex-infix: "";
 
       @if $direction == "right" {
-        $cls-infix: "blue";
+        $child-infix: "last";
         $flex-infix: "-reverse";
       }
 
-      &.HeroOverview-player--#{$cls-infix} {
+      &:#{$child-infix}-child {
         #{$direction}: $hero-overview-offset-x;
 
         .Hero {

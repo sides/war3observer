@@ -22,31 +22,37 @@ export default class HeroComponent extends Component {
 
     return (
       <div class={`Hero ${!hero.hitpoints ? 'Hero--dead' : ''}`} data-id={hero.id}>
-        <div class="Hero-portrait">
-          <Icon id={hero.id} class="Hero-icon" />
-          <span class="Hero-level">{hero.level}</span>
-        </div>
+        {vnode.attrs.showPortrait ? (
+          <div class="Hero-portrait">
+            <Icon id={hero.id} class="Hero-icon" />
+            <span class="Hero-level">{hero.level}</span>
+          </div>
+        ) : ''}
 
-        <div class="Hero-abilities" data-amount={abilities.length}>
-          {abilities.map(ability => (
-            <div class="Hero-ability" data-id={ability.id}>
-              <Icon id={ability.id} class="Ability-icon" />
-              <span class="Ability-level">{ability.level}</span>
-            </div>
-          ))}
-        </div>
+        {vnode.attrs.showAbilities ? (
+          <div class="Hero-abilities" data-amount={abilities.length}>
+            {abilities.map(ability => (
+              <div class="Hero-ability" data-id={ability.id}>
+                <Icon id={ability.id} class="Ability-icon" />
+                <span class="Ability-level">{ability.level}</span>
+              </div>
+            ))}
+          </div>
+        ) : ''}
 
-        <div class="Hero-items" data-amount={items.length}>
-          {items.map(item => (
-            <div class="Hero-item" data-id={item.id}>
-              <Icon id={item.id} class="Item-icon" />
-              {item.charges > 0
-                ? <span class="Item-charges">{item.charges}</span>
-                : ''
-              }
-            </div>
-          ))}
-        </div>
+        {vnode.attrs.showItems ? (
+          <div class="Hero-items" data-amount={items.length}>
+            {items.map(item => (
+              <div class="Hero-item" data-id={item.id}>
+                <Icon id={item.id} class="Item-icon" />
+                {item.charges > 0
+                  ? <span class="Item-charges">{item.charges}</span>
+                  : ''
+                }
+              </div>
+            ))}
+          </div>
+        ) : ''}
       </div>
     );
   }

@@ -70,11 +70,11 @@ body {
 }
 
 @each $team, $color in $teamColors {
-  .color-team-#{$team} {
+  .color-#{$team} {
     color: $color;
   }
 
-  .bg-team-#{$team} {
+  .bg-#{$team} {
     background-color: $color;
     color: color-yiq($color);
   }

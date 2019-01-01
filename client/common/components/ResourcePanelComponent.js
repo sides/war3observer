@@ -8,20 +8,25 @@ export default class ResourcePanelComponent extends Component {
     return {};
   }
 
+  type() {
+    return app.settings.resourcePanelType || 'default';
+  }
+
   view() {
-    if (!app.game || !app.game.game.is_in_game) {
+    if (!app.isInGame()) {
       return null;
     }
 
     const icons = this.icons();
+    const type = this.type();
 
     return (
-      <div class="ResourcePanel">
-        {app.game.players.map(player => (
-          <div class={`ResourcePanel-player ResourcePanel-player--${teamToColorName(player.team_index)}`}>
+      <div class={`ResourcePanel ResourcePanel--${type}`}>
+        {app.getPlayers().map(player => (
+          <div class={`ResourcePanel-player ResourcePanel-player--team-${teamToColorName(player.team_index)}`}>
             <Resource
               icon={icons[player.race.toLowerCase()]}
-              class={`color-team-${getPlayerColor(player)}`}>
+              class={`color-${getPlayerColor(player)}`}>
               {player.name}
             </Resource>
 

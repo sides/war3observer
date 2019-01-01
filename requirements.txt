@@ -1,2 +1,2 @@
-websockets==7.0
-war3structs
+websockets
+git+https://github.com/warlockbrawl/war3structs.git

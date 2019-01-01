@@ -5,16 +5,20 @@ import Hero from './HeroComponent';
 
 export default class HeroOverviewComponent extends Component {
   view() {
-    if (!app.game || !app.game.game.is_in_game) {
+    if (!app.isInGame()) {
       return null;
     }
 
     return (
       <div class="HeroOverview">
-        {app.game.players.map(player => (
-          <div class={`HeroOverview-player HeroOverview-player--${teamToColorName(player.team_index)}`}>
-            {player.heroes.reverse().map(hero => (
-              <Hero hero={hero} />
+        {app.getPlayers().map(player => (
+          <div class={`HeroOverview-player HeroOverview-player--team-${teamToColorName(player.team_index)}`}>
+            {player.heroes.slice().reverse().map(hero => (
+              <Hero
+                hero={hero}
+                showPortrait={!app.settings.hideHeroPortraits}
+                showAbilities={!app.settings.hideHeroAbilities}
+                showItems={!app.settings.hideHeroItems} />
             ))}
           </div>
         ))}

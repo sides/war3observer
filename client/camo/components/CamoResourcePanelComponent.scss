@@ -1,17 +1,31 @@
-$camo-resource-panel-height:              59px !default;
-$camo-resource-panel-bg:                  url('./assets/ui/human-resource-panel.png') !default;
-$camo-resource-panel-spacing-y:           3px !default;
+$camo-resource-panel-height:     59px !default;
+$camo-resource-panel-spacing-y:  3px !default;
+
+$camo-resource-panel-widescreen-decoration-size: 240px;
+
+$camo-resource-panel-player-offset-x:  2px !default;
+
 $camo-resource-panel-resource-width:      134px !default;
 $camo-resource-panel-resource-height:     32px !default;
 $camo-resource-panel-resource-icon-width: 32px !default;
 $camo-resource-panel-resource-spacing-x:  23px !default;
-$camo-resource-panel-red-left:            242px !default;
-$camo-resource-panel-blue-left:           1070px !default;
 
 .ResourcePanel {
   height: $camo-resource-panel-height;
-  background: $camo-resource-panel-bg;
   position: relative;
+  background: no-repeat top / cover url('./assets/ui/human-resource-panel.png');
+
+  &.ResourcePanel--orc {
+    background-image: url('./assets/ui/orc-resource-panel.png');
+  }
+
+  &.ResourcePanel--nightelf {
+    background-image: url('./assets/ui/nightelf-resource-panel.png');
+  }
+
+  &.ResourcePanel--undead {
+    background-image: url('./assets/ui/undead-resource-panel.png');
+  }
 }
 
 .ResourcePanel-player {
@@ -47,11 +61,26 @@ $camo-resource-panel-blue-left:           1070px !default;
     }
   }
 
-  &.ResourcePanel-player--red {
-    left: $camo-resource-panel-red-left;
+  &:first-child {
+    left: ($camo-resource-panel-widescreen-decoration-size +
+          $camo-resource-panel-player-offset-x);
   }
 
-  &.ResourcePanel-player--blue {
-    left: $camo-resource-panel-blue-left;
+  &:last-child {
+    // Don't know where the 3px comes from
+    right: ($camo-resource-panel-widescreen-decoration-size +
+           $camo-resource-panel-player-offset-x +
+           3px);
+  }
+
+  @media (aspect-ratio: 4/3) {
+    &:first-child {
+      left: $camo-resource-panel-player-offset-x;
+    }
+
+    &:last-child {
+      right: ($camo-resource-panel-player-offset-x
+             + 3px);
+    }
   }
 }

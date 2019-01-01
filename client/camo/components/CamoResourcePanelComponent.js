@@ -13,4 +13,16 @@ export default class CamoResourcePanelComponent extends ResourcePanelComponent {
       supply: require('../assets/ui/supply.png')
     };
   }
+
+  type() {
+    if (!app.settings.resourcePanelType) {
+      return 'human';
+    }
+
+    if (app.settings.resourcePanelType === 'auto') {
+      return app.game.players[0].race.toLowerCase();
+    }
+
+    return app.settings.resourcePanelType;
+  }
 }

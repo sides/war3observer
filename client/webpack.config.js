@@ -41,13 +41,18 @@ module.exports = {
       },
       {
         test:  /\.(png|jpg|gif|svg|woff2)$/,
-        use: 'file-loader'
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'assets/[name].[ext]'
+          }
+        }
       }
     ]
   },
 
   output: {
-    filename: '[name].js',
+    filename: 'assets/[name].js',
     path: path.resolve(process.cwd(), 'dist'),
     publicPath: '',
     libraryTarget: 'window'
@@ -62,7 +67,7 @@ module.exports = {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css'
+      filename: 'assets/[name].css'
     }),
     ...views.map(view => {
       let templatePath = path.resolve(viewsDir, view, 'app.html');

@@ -1,12 +1,13 @@
 import * as m from 'mithril';
 
 export default class App {
-  constructor() {
+  constructor({ port, settings } = {}) {
     this.game = null;
-    this.config = {};
+    this.settings = settings || {};
+
     this._components = [];
-    this._mount = null;
     this._ws = null;
+    this._port = this.settings.port || '8765';
   }
 
   addComponent(component) {
@@ -14,7 +15,7 @@ export default class App {
   }
 
   boot() {
-    this._ws = new WebSocket("ws://localhost:8765/");
+    this._ws = new WebSocket(`ws://localhost:${this._port}/`);
     this._ws.onmessage = this.onmessage.bind(this);
 
     m.mount(document.getElementById('app'), { view: () => this._components.map(m) });
@@ -29,10 +30,20 @@ export default class App {
         break;
 
       case 'config':
-        this.config = data.content;
+        Object.assign(this.settings, data.content);
         break;
     }
 
     m.redraw();
+  }
+
+  isInGame() {
+    return app.game && app.game.game.is_in_game;
+  }
+
+  getPlayers() {
+    return !app.settings.reversePlayerOrder
+      ? app.game.players.slice()
+      : app.game.players.slice().reverse();
   }
 }
