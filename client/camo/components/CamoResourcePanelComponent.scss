@@ -79,8 +79,8 @@ $camo-resource-panel-resource-spacing-x:  23px !default;
     }
 
     &:last-child {
-      right: ($camo-resource-panel-player-offset-x
-             + 3px);
+      right: ($camo-resource-panel-player-offset-x +
+             3px);
     }
   }
 }

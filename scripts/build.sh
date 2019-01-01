@@ -22,8 +22,8 @@ python.exe tools/extract_icons.py "$1" dist/client/icons/
 
 # Archive
 echo 'Packaging release...'
-cp README dist/README
-cp LICENSE dist/LICENSE
 cd dist
+cp ../README.md .
+cp ../LICENSE .
 rm ../war3observer.zip
 zip -r ../war3observer.zip ./*

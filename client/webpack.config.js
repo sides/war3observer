@@ -35,8 +35,8 @@ module.exports = {
         test: /\.scss$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader' },
-          { loader: 'sass-loader' }
+          'css-loader',
+          'sass-loader'
         ]
       },
       {
@@ -52,7 +52,7 @@ module.exports = {
   },
 
   output: {
-    filename: 'assets/[name].js',
+    filename: '[name].js',
     path: path.resolve(process.cwd(), 'dist'),
     publicPath: '',
     libraryTarget: 'window'
@@ -67,7 +67,7 @@ module.exports = {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'assets/[name].css'
+      filename: '[name].css'
     }),
     ...views.map(view => {
       let templatePath = path.resolve(viewsDir, view, 'app.html');
