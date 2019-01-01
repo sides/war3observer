@@ -68,7 +68,7 @@ To update to the latest version you should be able to just download the latest r
 - `python -m war3observer` to start the server
 - `cd client`
 - `npm install`
-- `npm run watch` to watch for changes and build the client (rerun this whenever a new view is added)
+- `npm run start` to watch for changes and build the client (rerun this whenever a new view is added)
 - `mkdir dist\icons`
 - `python ..\tools\extract_icons.py <wc3 installation dir> .\dist\icons` if you want to include icons
 
