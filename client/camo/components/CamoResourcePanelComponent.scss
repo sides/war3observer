@@ -1,17 +1,17 @@
-$camo-resource-panel-height:     59px !default;
-$camo-resource-panel-spacing-y:  3px !default;
+$resource-panel-height:     59px !default;
+$resource-panel-spacing-y:  3px !default;
 
-$camo-resource-panel-widescreen-decoration-size: 240px;
+$resource-panel-widescreen-decoration-size: 240px !default;
 
-$camo-resource-panel-player-offset-x:  2px !default;
+$resource-panel-player-offset-x:  2px !default;
 
-$camo-resource-panel-resource-width:      134px !default;
-$camo-resource-panel-resource-height:     32px !default;
-$camo-resource-panel-resource-icon-width: 32px !default;
-$camo-resource-panel-resource-spacing-x:  23px !default;
+$resource-panel-resource-width:      134px !default;
+$resource-panel-resource-height:     32px !default;
+$resource-panel-resource-icon-width: 32px !default;
+$resource-panel-resource-spacing-x:  23px !default;
 
 .ResourcePanel {
-  height: $camo-resource-panel-height;
+  height: $resource-panel-height;
   position: relative;
   background: no-repeat top / cover url('./assets/ui/human-resource-panel.png');
 
@@ -30,22 +30,22 @@ $camo-resource-panel-resource-spacing-x:  23px !default;
 
 .ResourcePanel-player {
   position: absolute;
-  top: $camo-resource-panel-spacing-y;
+  top: $resource-panel-spacing-y;
   display: flex;
 
   .Resource {
-    height: $camo-resource-panel-resource-height;
-    width: $camo-resource-panel-resource-width;
+    height: $resource-panel-resource-height;
+    width: $resource-panel-resource-width;
     display: flex;
     align-items: center;
 
     + .Resource {
-      margin-left: $camo-resource-panel-resource-spacing-x;
+      margin-left: $resource-panel-resource-spacing-x;
     }
 
     .Resource-icon {
-      width: $camo-resource-panel-resource-icon-width - 2;
-      height: $camo-resource-panel-resource-height - 2;
+      width: $resource-panel-resource-icon-width - 2;
+      height: $resource-panel-resource-height - 2;
     }
 
     .Resource-label {
@@ -62,24 +62,24 @@ $camo-resource-panel-resource-spacing-x:  23px !default;
   }
 
   &:first-child {
-    left: ($camo-resource-panel-widescreen-decoration-size +
-          $camo-resource-panel-player-offset-x);
+    left: ($resource-panel-widescreen-decoration-size +
+          $resource-panel-player-offset-x);
   }
 
   &:last-child {
     // Don't know where the 3px comes from
-    right: ($camo-resource-panel-widescreen-decoration-size +
-           $camo-resource-panel-player-offset-x +
+    right: ($resource-panel-widescreen-decoration-size +
+           $resource-panel-player-offset-x +
            3px);
   }
 
   @media (aspect-ratio: 4/3) {
     &:first-child {
-      left: $camo-resource-panel-player-offset-x;
+      left: $resource-panel-player-offset-x;
     }
 
     &:last-child {
-      right: ($camo-resource-panel-player-offset-x +
+      right: ($resource-panel-player-offset-x +
              3px);
     }
   }

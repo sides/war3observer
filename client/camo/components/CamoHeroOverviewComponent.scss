@@ -1,36 +1,36 @@
-$hero-overview-offset-y:  -11px;
-$hero-overview-offset-x:  9px;
-$hero-overview-spacing-x: 3px;
+$hero-overview-offset-y:  -11px !default;
+$hero-overview-offset-x:  9px !default;
+$hero-overview-spacing-x: 3px !default;
 
-$hero-overview-portrait-height:       86px;
-$hero-overview-portrait-spacing-y:    6px;
-$hero-overview-portrait-dead-filter:  grayscale(100%) brightness(50%);
-$hero-overview-portrait-icon-width:   69px;
-$hero-overview-portrait-icon-height:  68px;
+$hero-overview-portrait-height:       86px !default;
+$hero-overview-portrait-spacing-y:    6px !default;
+$hero-overview-portrait-dead-filter:  grayscale(100%) brightness(50%) !default;
+$hero-overview-portrait-icon-width:   69px !default;
+$hero-overview-portrait-icon-height:  68px !default;
 $hero-overview-portrait-quantity-label: (
   "offset-y":                         20px,
   "offset-x":                         3px,
   "size":                             20px,
   "font-size":                        16px
-);
+) !default;
 
-$hero-overview-ability-padding:  1px;
-$hero-overview-ability-height:   $hero-overview-portrait-height * .5;
+$hero-overview-ability-padding:  1px !default;
+$hero-overview-ability-height:   ($hero-overview-portrait-height * .5) !default;
 $hero-overview-ability-quantity-label: (
   "offset-y":                    3px,
   "offset-x":                    4px,
   "size":                        16px,
   "font-size":                   14px
-);
+) !default;
 
-$hero-overview-item-padding:  1px;
-$hero-overview-item-height:   $hero-overview-portrait-height * .3334;
+$hero-overview-item-padding:  1px !default;
+$hero-overview-item-height:   ($hero-overview-portrait-height * .3334) !default;
 $hero-overview-item-quantity-label: (
   "offset-y":                 2px,
   "offset-x":                 2px,
   "size":                     14px,
   "font-size":                13px
-);
+) !default;
 
 @mixin quantity-label($dimensions) {
   position: absolute;
@@ -81,7 +81,7 @@ $hero-overview-item-quantity-label: (
       .Hero-abilities {
         display: flex;
         flex-direction: column;
-        margin: -$hero-overview-ability-padding;
+        margin: ($hero-overview-ability-padding * -1);
 
         .Hero-ability {
           height: $hero-overview-ability-height;
@@ -107,7 +107,7 @@ $hero-overview-item-quantity-label: (
       .Hero-items {
         display: flex;
         flex-direction: column;
-        margin: -$hero-overview-item-padding;
+        margin: ($hero-overview-item-padding * -1);
 
         .Hero-item {
           height: $hero-overview-item-height;

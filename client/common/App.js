@@ -7,7 +7,7 @@ export default class App {
 
     this._components = [];
     this._ws = null;
-    this._port = this.settings.port || '8765';
+    this._port = port || '8765';
   }
 
   addComponent(component) {
