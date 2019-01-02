@@ -60,8 +60,7 @@ module.exports = {
 
   optimization: {
     splitChunks: {
-      chunks: 'all',
-      name: (module, chunks, cacheGroupKey) => cacheGroupKey
+      chunks: 'all'
     }
   },
 
@@ -77,7 +76,7 @@ module.exports = {
       return new HtmlWebpackPlugin({
         filename: view + '.html',
         template: templatePath,
-        chunks: ['vendors', view],
+        excludeChunks: views.filter(excludedView => excludedView !== view),
         inject: false
       })
     })
