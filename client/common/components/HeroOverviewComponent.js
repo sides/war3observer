@@ -1,17 +1,18 @@
 import * as m from 'mithril';
 import { teamToColorName } from '../utils/color';
+import { isInGame, getPlayers } from '../utils/game';
 import Component from '../Component';
 import Hero from './HeroComponent';
 
 export default class HeroOverviewComponent extends Component {
   view() {
-    if (!app.isInGame()) {
+    if (!isInGame()) {
       return null;
     }
 
     return (
       <div class="HeroOverview">
-        {app.getPlayers().map(player => (
+        {getPlayers().map(player => (
           <div class={`HeroOverview-player HeroOverview-player--team-${teamToColorName(player.team_index)}`}>
             {player.heroes.slice().reverse().map(hero => (
               <Hero

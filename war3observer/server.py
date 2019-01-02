@@ -6,7 +6,7 @@ import logging
 from .game import Game
 
 class Server():
-  def set_defaults(config):
+  def setdefaults(config):
     config.setdefault('verbosity', logging.WARNING)
     config.setdefault('port', 8765)
     config.setdefault('clientConfig', {})
@@ -14,7 +14,7 @@ class Server():
     return config
 
   def __init__(self, config):
-    self.config = Server.set_defaults(config)
+    self.config = Server.setdefaults(config)
     self.game = Game()
 
     logging.basicConfig(
@@ -43,14 +43,13 @@ class Server():
     async for message in websocket:
       data = json.loads(message)
       if data['action'] == 'set_config':
-        self.config['clientConfig'] = data['content']
-        await websocket.send(self.config_event(self.config['clientConfig']))
+        await websocket.send(self.config_event(data['content']))
 
   async def start(self, websocket, path):
     logging.debug('observer - Starting with config %s' % self.config)
 
     try:
-      # Begin by sending the config once
+      # Begin by sending the client config once
       await websocket.send(self.config_event(self.config['clientConfig']))
 
       # Send an updated state periodically

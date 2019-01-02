@@ -1,5 +1,6 @@
 import * as m from 'mithril';
 import { teamToColorName, getPlayerColor } from '../utils/color';
+import { isInGame, getPlayers } from '../utils/game';
 import Component from '../Component';
 import Resource from './ResourceComponent';
 
@@ -13,7 +14,7 @@ export default class ResourcePanelComponent extends Component {
   }
 
   view() {
-    if (!app.isInGame()) {
+    if (!isInGame()) {
       return null;
     }
 
@@ -22,7 +23,7 @@ export default class ResourcePanelComponent extends Component {
 
     return (
       <div class={`ResourcePanel ResourcePanel--${type}`}>
-        {app.getPlayers().map(player => (
+        {getPlayers().map(player => (
           <div class={`ResourcePanel-player ResourcePanel-player--team-${teamToColorName(player.team_index)}`}>
             <Resource
               icon={icons[player.race.toLowerCase()]}

@@ -7,7 +7,8 @@ export default class App {
 
     this._components = [];
     this._ws = null;
-    this._port = port || '8765';
+    this._wsPort = port || '8765';
+    this._wsReconnectTries = 500;
   }
 
   addComponent(component) {
@@ -15,10 +16,20 @@ export default class App {
   }
 
   boot() {
-    this._ws = new WebSocket(`ws://localhost:${this._port}/`);
-    this._ws.onmessage = this.onmessage.bind(this);
+    this.connect(this._wsReconnectTries);
 
     m.mount(document.getElementById('app'), { view: () => this._components.map(m) });
+  }
+
+  connect(tries) {
+    console.log(tries);
+    this._ws = new WebSocket(`ws://localhost:${this._wsPort}/`);
+    this._ws.onmessage = this.onmessage.bind(this);
+
+    if (tries > 0) {
+      this._ws.onclose = e => setTimeout(() => this.connect(--tries), 5000);
+      this._ws.onopen = e => this._ws.onclose = z => setTimeout(() => this.connect(this._wsReconnectTries), 5000);
+    }
   }
 
   onmessage(event) {
@@ -35,15 +46,5 @@ export default class App {
     }
 
     m.redraw();
-  }
-
-  isInGame() {
-    return app.game && app.game.game.is_in_game;
-  }
-
-  getPlayers() {
-    return !app.settings.reversePlayerOrder
-      ? app.game.players.slice()
-      : app.game.players.slice().reverse();
   }
 }
