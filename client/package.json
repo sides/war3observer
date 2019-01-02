@@ -1,6 +1,6 @@
 {
   "name": "war3observer-client-tools",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Developer package for making views for war3observer.",
   "author": "sides <sides@sides.tv>",
   "license": "MIT",
@@ -30,6 +30,5 @@
     "sass-loader": "^7.1.0",
     "webpack": "^4.28.2",
     "webpack-cli": "^3.1.2"
-  },
-  "devDependencies": {}
+  }
 }
