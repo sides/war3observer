@@ -13,14 +13,17 @@ It runs a local websocket server which sends a message with the entire state per
 - Extract it somewhere
 - In OBS, add a browser source to your scene, tick `Local file` and select any of the `.html` files in the `client` folder you extracted
 - Set the width and height to 1920x1080 for 16:9, 1440x1080 for 4:3, scale it in OBS as needed
+- For best performance (optional):
+  - One file = one source: Use existing sources between scenes
+  - If you stream other types of content (i.e. you don't exclusively cast Warcraft III games), keep these sources contained in their own scene collection OR enable `Shutdown source when not visible` on them
+  - If the source has no animations the FPS can be set to something low, like 5
 - Now you can run `war3observer.exe` whenever you want the overlay to start updating
 
-You generally shouldn't, but if you experience the overlay not updating properly, try any of these:
+You generally shouldn't, but if you experience the overlay not updating properly, you can try any of these:
 
 - Restart `war3observer.exe` (after you've started Warcraft III)
 - Refresh the browser cache in OBS (double-click on the source, hit OK)
 
-If the latter worked but the problem repeats itself, you can try having `Refresh browser when scene becomes active` and/or `Shutdown source when not visible` enabled.
 
 ### Advanced usage
 
@@ -79,7 +82,7 @@ To set up:
 
 ### Making custom views
 
-If you're interested in making personalized views you can, if you want, use the `war3observer-client-tools` package on npm.
+If you're interested in making personalized views and you want to make use of the included client's setup and components, you can use the `war3observer-client-tools` package on npm.
 
 > Note: If you only want to edit a view's settings and/or add custom CSS, you can just copy+paste one of the included views and edit its HTML. Add custom CSS in `<style>` tags or link to one; change `app.settings` before the call to `app.boot()`.
 

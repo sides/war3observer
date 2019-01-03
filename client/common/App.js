@@ -8,7 +8,7 @@ export default class App {
     this._components = [];
     this._ws = null;
     this._wsPort = port || '8765';
-    this._wsReconnectTries = 500;
+    this._wsReconnectTries = 120;
   }
 
   addComponent(component) {
