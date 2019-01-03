@@ -4,18 +4,20 @@ war3observer is a tool that keeps a local webpage updated with data from the War
 
 It runs a local websocket server which sends a message with the entire state periodically. It uses [war3structs](https://github.com/warlockbrawl/war3structs) to parse the state from the memory mapped file. A web client written in [mithril.js](https://github.com/MithrilJS/mithril.js/) is included to render the state.
 
+![screenshot example](/screenshots/replay-example.jpg)
+
 
 ## Usage
 
-- [Download the latest release](https://github.com/warlockbrawl/war3observer/releases) (the zip file)
+- [Download the latest release](https://github.com/warlockbrawl/war3observer/releases)
 - Extract it somewhere
-- In OBS, add a browser source to your scene (tick `Local file`) and select any of the `.html` files in the `client` folder you extracted
+- In OBS, add a browser source to your scene, tick `Local file` and select any of the `.html` files in the `client` folder you extracted
 - Set the width and height to 1920x1080 for 16:9, 1440x1080 for 4:3, scale it in OBS as needed
 - Now you can run `war3observer.exe` whenever you want the overlay to start updating
 
 You generally shouldn't, but if you experience the overlay not updating properly, try any of these:
 
-- Start `war3observer.exe` **after you've start Warcraft III**
+- Restart `war3observer.exe` (after you've started Warcraft III)
 - Refresh the browser cache in OBS (double-click on the source, hit OK)
 
 If the latter worked but the problem repeats itself, you can try having `Refresh browser when scene becomes active` and/or `Shutdown source when not visible` enabled.
@@ -56,10 +58,12 @@ And all listening clients will update their settings accordingly.
 
 ## Updating
 
-To update to the latest version you should be able to just download the latest release and extract the contents to wherever you have the previous version installed (replacing files).
+To update to the latest version you can download the latest release and extract the contents to wherever you have the previous version installed (replacing files).
 
 
 ## Development
+
+To set up:
 
 - Have [Python 3](https://www.python.org/), [node](https://nodejs.org/en/), and Warcraft III installed
 - `git clone https://github.com/warlockbrawl/war3observer.git`
@@ -72,9 +76,14 @@ To update to the latest version you should be able to just download the latest r
 - `mkdir dist\icons`
 - `python ..\tools\extract_icons.py <wc3 installation dir> .\dist\icons` if you want to include icons
 
+
 ### Making custom views
 
-If you're interested in making personalized views that wouldn't be part of this repo, you can, if you want, use the `war3observer-client-tools` package on npm. Create a directory for your project that contains these files:
+If you're interested in making personalized views you can, if you want, use the `war3observer-client-tools` package on npm.
+
+> Note: If you only want to edit a view's settings and/or add custom CSS, you can just copy+paste one of the included views and edit its HTML. Add custom CSS in `<style>` tags or link to one; change `app.settings` before the call to `app.boot()`.
+
+Create a directory for your project that contains these files:
 
 **package.json**
 
@@ -96,7 +105,7 @@ const config = require('war3observer-client-tools');
 module.exports = config;
 ```
 
-**views\\\<your view>\app.js**
+**views/\<your view\>/app.js**
 
 ```js
 import App from 'war3observer-client-tools/common/App';
