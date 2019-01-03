@@ -22,7 +22,6 @@ export default class App {
   }
 
   connect(tries) {
-    console.log(tries);
     this._ws = new WebSocket(`ws://localhost:${this._wsPort}/`);
     this._ws.onmessage = this.onmessage.bind(this);
 

@@ -58,7 +58,7 @@ And all listening clients will update their settings accordingly.
 
 ## Updating
 
-To update to the latest version you can download the latest release and extract the contents to wherever you have the previous version installed (replacing files).
+To update to the latest version you can download the latest release and extract the contents to wherever you have the previous version installed (replacing files). If you are using the included client you will have to clear the browser cache in OBS as well.
 
 
 ## Development
