@@ -17,8 +17,8 @@ def main():
     type=int,
     const=10,
     nargs='?',
-    dest='verbosity',
-    metavar='VERBOSITY',
+    dest='loggingLevel',
+    metavar='LOGGINGLEVEL',
     help='the logging level to use')
   parser.add_argument('--port',
     default=argparse.SUPPRESS,

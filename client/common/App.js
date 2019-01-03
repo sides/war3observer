@@ -39,7 +39,7 @@ export default class App {
         this.game = data.content;
         break;
 
-      case 'config':
+      case 'settings':
         Object.assign(this.settings, data.content);
         break;
     }

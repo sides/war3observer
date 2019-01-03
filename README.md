@@ -32,7 +32,7 @@ For advanced options you can create a file called `war3observer.config.json` in 
 ```json
 {
   "port": 8657,
-  "clientConfig": {
+  "clientSettings": {
     "useTeamColors": true,
     "hideHeroItems": true,
     "reversePlayerOrder": true
@@ -45,18 +45,7 @@ For advanced options you can create a file called `war3observer.config.json` in 
 
 #### Controlling the overlay
 
-It's possible to control the overlay beyond OBS scenes with an external program. Send a message to the server of this form:
-
-```json
-{
-  "action": "set_config",
-  "content": {
-    "hideHeroItems": false
-  }
-}
-```
-
-And all listening clients will update their settings accordingly.
+It's possible to control the overlay beyond OBS scenes with an external program. Send a JSON message to the server with top-level `action` as `"setClientSettings"` and `content` as an object of settings to change. All listening clients will update accordingly.
 
 
 ## Updating
@@ -65,8 +54,6 @@ To update to the latest version you can download the latest release and extract 
 
 
 ## Development
-
-To set up:
 
 - Have [Python 3](https://www.python.org/), [node](https://nodejs.org/en/), and Warcraft III installed
 - `git clone https://github.com/warlockbrawl/war3observer.git`
@@ -82,9 +69,9 @@ To set up:
 
 ### Making custom views
 
-If you're interested in making personalized views and you want to make use of the included client's setup and components, you can use the `war3observer-client-tools` package on npm.
+If you're interested in making personalized views and you want to make use of the included client's environment, you can use the `war3observer-client-tools` package on npm.
 
-> Note: If you only want to edit a view's settings and/or add custom CSS, you can just copy+paste one of the included views and edit its HTML. Add custom CSS in `<style>` tags or link to one; change `app.settings` before the call to `app.boot()`.
+> Note: If you only need to edit a view's settings and/or add custom CSS, you can just copy+paste one of the included views and edit its HTML. Add custom CSS in `<style>` tags or link to one; change `app.settings` before the call to `app.boot()`.
 
 Create a directory for your project that contains these files:
 

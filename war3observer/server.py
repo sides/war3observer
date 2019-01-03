@@ -7,9 +7,9 @@ from .game import Game
 
 class Server():
   def setdefaults(config):
-    config.setdefault('verbosity', logging.WARNING)
+    config.setdefault('loggingLevel', logging.WARNING)
     config.setdefault('port', 8765)
-    config.setdefault('clientConfig', {})
+    config.setdefault('clientSettings', {})
 
     return config
 
@@ -18,7 +18,7 @@ class Server():
     self.game = Game()
 
     logging.basicConfig(
-      level=self.config['verbosity'],
+      level=self.config['loggingLevel'],
       format='%(relativeCreated)6d %(message)s')
 
   def serve(self):
@@ -30,8 +30,8 @@ class Server():
   def state_event(self, state):
     return json.dumps({ 'type': 'state', 'content': state }, default=lambda o: None)
 
-  def config_event(self, config):
-    return json.dumps({ 'type': 'config', 'content': config })
+  def settings_event(self, settings):
+    return json.dumps({ 'type': 'settings', 'content': settings })
 
   async def send_state(self, websocket):
     while True:
@@ -42,15 +42,15 @@ class Server():
   async def respond(self, websocket):
     async for message in websocket:
       data = json.loads(message)
-      if data['action'] == 'set_config':
-        await websocket.send(self.config_event(data['content']))
+      if data['action'] == 'setClientSettings':
+        await websocket.send(self.settings_event(data['content']))
 
   async def start(self, websocket, path):
     logging.debug('observer - Starting with config %s' % self.config)
 
     try:
-      # Begin by sending the client config once
-      await websocket.send(self.config_event(self.config['clientConfig']))
+      # Begin by sending the client settings once
+      await websocket.send(self.settings_event(self.config['clientSettings']))
 
       # Send an updated state periodically
       asyncio.create_task(self.send_state(websocket))
