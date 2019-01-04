@@ -14,8 +14,8 @@ It runs a local websocket server which sends a message with the entire state per
 - In OBS, add a browser source to your scene, tick `Local file` and select any of the `.html` files in the `client` folder you extracted
 - Set the width and height to 1920x1080 for 16:9, 1440x1080 for 4:3, scale it in OBS as needed
 - For best performance (optional):
-  - One file = one source: Use existing sources between scenes
-  - If you stream other types of content (i.e. you don't exclusively cast Warcraft III games), keep these sources contained in their own scene collection OR enable `Shutdown source when not visible` on them
+  - Use existing sources between scenes (one file = one source)
+  - To avoid them running in the background regardless of whether you're using them or not, keep the sources in a separate scene collection OR enable `Shutdown source when not visible` on them
   - If the source has no animations the FPS can be set to something low, like 5
 - Now you can run `war3observer.exe` whenever you want the overlay to start updating
 
