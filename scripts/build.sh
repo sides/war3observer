@@ -25,5 +25,4 @@ echo 'Packaging release...'
 cd dist
 cp ../README.md .
 cp ../LICENSE .
-rm ../war3observer.zip
-zip -r ../war3observer.zip ./*
+zip -r "../war3observer-win-$(uname -m)-$(head -n 1 ../war3observer/__init__.py | grep -Po '(\d+\.\d+\.\d+)').zip" ./*
