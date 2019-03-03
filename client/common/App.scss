@@ -45,12 +45,16 @@ $line-height-base:   1.5 !default;
 $body-color:         #fff !default;
 $body-bg:            #222 !default;
 
-@function color-yiq($color) {
+@function yiq($color) {
   $r: red($color);
   $g: green($color);
   $b: blue($color);
 
-  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+  @return (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+}
+
+@function color-yiq($color) {
+  $yiq: yiq($color);
 
   @if ($yiq >= 150) {
     @return #111;

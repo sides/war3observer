@@ -59,6 +59,14 @@ $resource-panel-resource-spacing-x:  23px !default;
         color: inherit;
       }
     }
+
+    @each $team, $color in $teamColors {
+      &.color-#{$team} {
+        @if (yiq($color) < 75) {
+          color: mix($color, #fff);
+        }
+      }
+    }
   }
 
   &:first-child {
