@@ -3,11 +3,12 @@ import websockets
 import json
 import logging
 
+from . import __version__
 from .game import Game
 
 class Server():
   def setdefaults(config):
-    config.setdefault('loggingLevel', logging.WARNING)
+    config.setdefault('loggingLevel', logging.INFO)
     config.setdefault('port', 8765)
     config.setdefault('clientSettings', {})
 
@@ -22,6 +23,9 @@ class Server():
       format='%(relativeCreated)6d %(message)s')
 
   def serve(self):
+    logging.info('observer %s' % __version__)
+    logging.debug('observer - Starting with config %s' % self.config)
+
     start_server = websockets.serve(self.start, 'localhost', self.config['port'])
 
     asyncio.get_event_loop().run_until_complete(start_server)
@@ -46,25 +50,28 @@ class Server():
         await websocket.send(self.settings_event(data['content']))
 
   async def start(self, websocket, path):
-    logging.debug('observer - Starting with config %s' % self.config)
+    logging.debug('observer - Client connected')
 
     try:
       # Begin by sending the client settings once
-      await websocket.send(self.settings_event(self.config['clientSettings']))
+      send_config = asyncio.create_task(
+        websocket.send(self.settings_event(self.config['clientSettings'])))
 
       # Send an updated state periodically
-      asyncio.create_task(self.send_state(websocket))
+      send_state = asyncio.create_task(
+        self.send_state(websocket))
 
       # Check for messages
-      await self.respond(websocket)
+      respond = asyncio.create_task(
+        self.respond(websocket))
 
-    except websockets.exceptions.ConnectionClosed:
-      pass
-    except:
-      raise
+      await asyncio.wait(
+        [send_config, send_state, respond])
     finally:
-      logging.debug('observer - Closing game')
+      logging.debug('observer - Client closed')
 
-      # Close the game on errors or exit. You may start getting
-      # permission errors if this doesn't properly close out.
+      # Stop sending the state
+      send_state.cancel()
+
+      # Close the game
       self.game.close()
