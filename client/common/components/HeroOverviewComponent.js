@@ -5,10 +5,16 @@ import Component from '../Component';
 import Hero from './HeroComponent';
 
 export default class HeroOverviewComponent extends Component {
+  statusBars() {
+    return {};
+  }
+
   view() {
     if (!isInGame()) {
       return null;
     }
+
+    const { health, mana } = this.statusBars();
 
     return (
       <div class="HeroOverview">
@@ -18,6 +24,10 @@ export default class HeroOverviewComponent extends Component {
               <Hero
                 hero={hero}
                 showPortrait={!app.settings.hideHeroPortraits}
+                showHealth={!app.settings.hideHeroHealth}
+                showMana={!app.settings.hideHeroMana}
+                healthComponent={health}
+                manaComponent={mana}
                 showAbilities={!app.settings.hideHeroAbilities}
                 showItems={!app.settings.hideHeroItems} />
             ))}

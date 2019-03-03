@@ -8,8 +8,8 @@ $hero-overview-portrait-dead-filter:  grayscale(100%) brightness(50%) !default;
 $hero-overview-portrait-icon-width:   69px !default;
 $hero-overview-portrait-icon-height:  68px !default;
 $hero-overview-portrait-quantity-label: (
-  "offset-y":                         20px,
-  "offset-x":                         3px,
+  "offset-y":                         21px,
+  "offset-x":                         4px,
   "size":                             20px,
   "font-size":                        16px
 ) !default;
@@ -75,6 +75,23 @@ $hero-overview-item-quantity-label: (
 
         .Hero-level {
           @include quantity-label($hero-overview-portrait-quantity-label);
+        }
+
+        .Hero-status {
+          position: absolute;
+          bottom: 1px;
+          left: -1px;
+          background-color: #000;
+          padding: 1px;
+
+          .Progress {
+            width: 70px;
+            height: 6px;
+
+            + .Progress {
+              margin-top: 2px;
+            }
+          }
         }
       }
 

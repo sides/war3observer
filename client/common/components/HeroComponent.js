@@ -1,6 +1,7 @@
 import * as m from 'mithril';
 import Component from '../Component';
 import Icon from './IconComponent';
+import ProgressComponent from './ProgressComponent';
 
 export default class HeroComponent extends Component {
   filterHeroAbilities(ability) {
@@ -20,14 +21,34 @@ export default class HeroComponent extends Component {
 
     const items = hero.inventory;
 
+    const healthComponent = vnode.attrs.healthComponent || ProgressComponent;
+    const manaComponent = vnode.attrs.manaComponent || ProgressComponent;
+
     return (
       <div class={`Hero ${!hero.hitpoints ? 'Hero--dead' : ''}`} data-id={hero.id}>
         {vnode.attrs.showPortrait ? (
           <div class="Hero-portrait">
             <Icon id={hero.id} class="Hero-icon" />
             <span class="Hero-level">{hero.level}</span>
+            <div class="Hero-status">
+              {vnode.attrs.showHealth ? (
+                m(healthComponent, {
+                  type: 'status',
+                  value: hero.hitpoints,
+                  max: hero.hitpoints_max
+                })
+              ) : null}
+
+              {vnode.attrs.showMana ? (
+                m(manaComponent, {
+                  type: 'status',
+                  value: hero.mana,
+                  max: hero.mana_max
+                })
+              ) : null}
+            </div>
           </div>
-        ) : ''}
+        ) : null}
 
         {vnode.attrs.showAbilities ? (
           <div class="Hero-abilities" data-amount={abilities.length}>
@@ -38,7 +59,7 @@ export default class HeroComponent extends Component {
               </div>
             ))}
           </div>
-        ) : ''}
+        ) : null}
 
         {vnode.attrs.showItems ? (
           <div class="Hero-items" data-amount={items.length}>
@@ -47,12 +68,12 @@ export default class HeroComponent extends Component {
                 <Icon id={item.id} class="Item-icon" />
                 {item.charges > 0
                   ? <span class="Item-charges">{item.charges}</span>
-                  : ''
+                  : null
                 }
               </div>
             ))}
           </div>
-        ) : ''}
+        ) : null}
       </div>
     );
   }

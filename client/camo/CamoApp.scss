@@ -2,6 +2,12 @@
 //
 $font-family-base: 'Friz Quadrata', serif !default;
 
+$themeColors: (
+  "success": #00ff00,
+  "warning": #ffff00,
+  "danger":  #ff0000
+) !default;
+
 
 // Base app styles
 //
@@ -13,6 +19,20 @@ $font-family-base: 'Friz Quadrata', serif !default;
 @font-face {
   font-family: 'Friz Quadrata';
   src: url('./assets/fonts/frizqt.woff2') format('woff2');
+}
+
+.Progress {
+  &.Progress--status {
+    background-color: #000;
+
+    .Progress-bar {
+      width: 100%;
+      height: 100%;
+      background-image: url('./assets/ui/statusbar-fill.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
 }
 
 

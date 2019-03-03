@@ -1,6 +1,6 @@
 {
   "name": "war3observer-client-tools",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "Developer package for making views for war3observer.",
   "author": "sides <sides@sides.tv>",
   "license": "MIT",
