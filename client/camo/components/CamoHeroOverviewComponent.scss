@@ -59,6 +59,10 @@ $hero-overview-item-quantity-label: (
 
       &.Hero--dead {
         filter: $hero-overview-portrait-dead-filter;
+
+        .Hero-status {
+          display: none;
+        }
       }
 
       + .Hero {
