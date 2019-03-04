@@ -62,7 +62,7 @@ $resource-panel-resource-spacing-x:  23px !default;
 
     @each $team, $color in $teamColors {
       &.color-#{$team} {
-        @if (yiq($color) < 75) {
+        @if (yiq($color) < 65) {
           color: mix($color, #fff);
         }
       }
