@@ -50,7 +50,7 @@ class Server():
         state = await self.game.update()
 
         for websocket in self._clients:
-          await websocket.send(self.state_event(state))
+          asyncio.create_task(websocket.send(self.state_event(state)))
       except:
         logging.exception('An error occurred while updating the game state')
 
@@ -62,10 +62,8 @@ class Server():
     self._clients.add(websocket)
 
     try:
-      # Begin by sending the client settings once followed by the
-      # current game state
+      # Begin by sending the client settings once
       await websocket.send(self.settings_event(self.config['clientSettings']))
-      await websocket.send(self.state_event(self.game.state))
 
       # Start checking for messages
       await self._receive_client_messages(websocket)
