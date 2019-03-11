@@ -15,6 +15,8 @@ class Server():
     return config
 
   def __init__(self, config):
+    self._clients = set()
+
     self.config = Server.setdefaults(config)
     self.game = Game()
 
@@ -26,9 +28,14 @@ class Server():
     logging.info('observer %s' % __version__)
     logging.debug('observer - Starting with config %s' % self.config)
 
-    start_server = websockets.serve(self.start, 'localhost', self.config['port'])
+    # Start the websocket server
+    connect_client = websockets.serve(self.connect_client, 'localhost', self.config['port'])
+    asyncio.get_event_loop().run_until_complete(connect_client)
 
-    asyncio.get_event_loop().run_until_complete(start_server)
+    # Send the game state to all connected clients on a fixed timer
+    send_state = self.send_state_to_clients()
+    asyncio.ensure_future(send_state)
+
     asyncio.get_event_loop().run_forever()
 
   def state_event(self, state):
@@ -37,45 +44,44 @@ class Server():
   def settings_event(self, settings):
     return json.dumps({ 'type': 'settings', 'content': settings })
 
-  async def send_state(self, websocket):
+  async def send_state_to_clients(self):
     while True:
       try:
         state = await self.game.update()
-        await websocket.send(self.state_event(state))
+
+        for websocket in self._clients:
+          await websocket.send(self.state_event(state))
       except:
         logging.exception('An error occurred while updating the game state')
 
       await asyncio.sleep(2)
 
-  async def respond(self, websocket):
+  async def connect_client(self, websocket, path):
+    logging.debug('observer - Client connected')
+
+    self._clients.add(websocket)
+
+    try:
+      # Begin by sending the client settings once followed by the
+      # current game state
+      await websocket.send(self.settings_event(self.config['clientSettings']))
+      await websocket.send(self.state_event(self.game.state))
+
+      # Start checking for messages
+      await self._receive_client_messages(websocket)
+    finally:
+      logging.debug('observer - Client closed')
+
+      self._clients.remove(websocket)
+
+      if not self._clients:
+        logging.debug('observer - Was last client, closing game')
+
+        # Close the game if all clients have disconnected
+        self.game.close()
+
+  async def _receive_client_messages(self, websocket):
     async for message in websocket:
       data = json.loads(message)
       if data['action'] == 'setClientSettings':
         await websocket.send(self.settings_event(data['content']))
-
-  async def start(self, websocket, path):
-    logging.debug('observer - Client connected')
-
-    try:
-      # Begin by sending the client settings once
-      send_config = asyncio.create_task(
-        websocket.send(self.settings_event(self.config['clientSettings'])))
-
-      # Send an updated state periodically
-      send_state = asyncio.create_task(
-        self.send_state(websocket))
-
-      # Check for messages
-      respond = asyncio.create_task(
-        self.respond(websocket))
-
-      await asyncio.wait(
-        [send_config, send_state, respond])
-    finally:
-      logging.debug('observer - Client closed')
-
-      # Stop sending the state
-      send_state.cancel()
-
-      # Close the game
-      self.game.close()

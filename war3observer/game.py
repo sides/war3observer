@@ -42,6 +42,8 @@ class Game():
     self._game_mm = None
     self._player_mms = []
 
+    self.state = {}
+
   async def _get_game_state(self):
     parsed = ObserverGame.parse(self._game_mm.data())
     del parsed._io
@@ -90,7 +92,9 @@ class Game():
     self._player_mms = []
 
   def close(self):
-    """Close the game's file handles and clear events"""
+    """Close the game's file handles and clear the state"""
+
+    self.state = {}
 
     if not self._game_mm is None:
       self._game_mm.close()
@@ -104,14 +108,15 @@ class Game():
     if self._game_mm is None:
       self._game_mm = SharedMemoryFile(4, self._game_size)
 
-    game_state = await self._get_game_state()
+    self.state['game'] = await self._get_game_state()
 
-    if not game_state['is_in_game']:
-      return dict(game=game_state, players=[])
+    if not self.state['game']['is_in_game']:
+      self.state['players'] = []
+      return self.state
 
-    if len(self._player_mms) != game_state['players_count']:
+    if len(self._player_mms) != self.state['game']['players_count']:
       self._clear_players()
-      for i in range(0, game_state['players_count']):
+      for i in range(0, self.state['game']['players_count']):
         mm = SharedMemoryFile(4+self._game_size+self._player_size*i, self._player_size)
         self._player_mms.append(mm)
 
@@ -119,6 +124,6 @@ class Game():
     for index, mm in enumerate(self._player_mms):
       tasks.append(self._get_player_state(index))
 
-    player_states = await asyncio.gather(*tasks)
+    self.state['players'] = await asyncio.gather(*tasks)
 
-    return dict(game=game_state, players=player_states)
+    return self.state
