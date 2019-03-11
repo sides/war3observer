@@ -16,13 +16,17 @@ It runs a local websocket server which sends a message with the entire state per
 - For best performance (optional):
   - Use existing sources between scenes (one file = one source)
   - To avoid them running in the background regardless of whether you're using them or not, keep the sources in a separate scene collection OR enable `Shutdown source when not visible` on them
-  - If the source has no animations the FPS can be set to something low, like 5
 - Now you can run `war3observer.exe` whenever you want the overlay to start updating
 
 You generally shouldn't, but if you experience the overlay not updating properly, you can try any of these:
 
 - Restart `war3observer.exe` (after you've started Warcraft III)
 - Refresh the browser cache in OBS (double-click on the source, hit OK)
+
+
+### Updating
+
+To update to the latest version you can download the latest release and extract the contents to wherever you have the previous version installed (replacing files). If you are using the included client you will have to clear the browser cache in OBS as well.
 
 
 ### Advanced usage
@@ -48,11 +52,6 @@ For advanced options you can create a file called `war3observer.config.json` in 
 It's possible to control the overlay beyond OBS scenes with an external program. Send a JSON message to the server with top-level `action` as `"setClientSettings"` and `content` as an object of settings to change. All listening clients will update accordingly.
 
 
-## Updating
-
-To update to the latest version you can download the latest release and extract the contents to wherever you have the previous version installed (replacing files). If you are using the included client you will have to clear the browser cache in OBS as well.
-
-
 ## Development
 
 - Have [Python 3](https://www.python.org/), [node](https://nodejs.org/en/), and Warcraft III installed
@@ -69,7 +68,7 @@ To update to the latest version you can download the latest release and extract 
 
 ### Making custom views
 
-If you're interested in making personalized views and you want to make use of the included client's environment, you can use the `war3observer-client-tools` package on npm.
+If you're interested in making personalized views and you want to make use of the included client's environment, you can use the `war3observer-client-tools` package on npm instead of cloning the repo.
 
 > Note: If you only need to edit a view's settings and/or add custom CSS, you can just copy+paste one of the included views and edit its HTML. Add custom CSS in `<style>` tags or link to one; change `app.settings` before the call to `app.boot()`.
 

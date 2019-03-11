@@ -81,8 +81,8 @@ class Server():
       # Stop sending the state
       send_state.cancel()
 
+      # Close the game if this was the last client
       if not self._clients:
-        # Close the game if this was the last client
         logging.debug('observer - Was last client, closing game')
 
         self.game.close()
