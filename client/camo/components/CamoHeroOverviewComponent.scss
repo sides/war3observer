@@ -87,10 +87,13 @@ $hero-overview-item-quantity-label: (
           left: -1px;
           background-color: #000;
           padding: 1px;
+          height: 16px;
+          display: flex;
+          flex-direction: column;
 
           .Progress {
             width: 70px;
-            height: 6px;
+            flex: 1;
 
             + .Progress {
               margin-top: 2px;

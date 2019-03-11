@@ -24,8 +24,7 @@ export default class HeroOverviewComponent extends Component {
               <Hero
                 hero={hero}
                 showPortrait={!app.settings.hideHeroPortraits}
-                showHealth={!app.settings.hideHeroHealth}
-                showMana={!app.settings.hideHeroMana}
+                showStatus={!app.settings.hideHeroStatus}
                 healthComponent={health}
                 manaComponent={mana}
                 showAbilities={!app.settings.hideHeroAbilities}

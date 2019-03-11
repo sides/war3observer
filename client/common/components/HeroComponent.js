@@ -30,23 +30,21 @@ export default class HeroComponent extends Component {
           <div class="Hero-portrait">
             <Icon id={hero.id} class="Hero-icon" />
             <span class="Hero-level">{hero.level}</span>
-            <div class="Hero-status">
-              {vnode.attrs.showHealth ? (
-                m(healthComponent, {
+            {vnode.attrs.showStatus ? (
+              <div class="Hero-status">
+                {m(healthComponent, {
                   type: 'status',
                   value: hero.hitpoints,
                   max: hero.hitpoints_max
-                })
-              ) : null}
+                })}
 
-              {vnode.attrs.showMana ? (
-                m(manaComponent, {
+                {m(manaComponent, {
                   type: 'status',
                   value: hero.mana,
                   max: hero.mana_max
-                })
-              ) : null}
-            </div>
+                })}
+              </div>
+            ) : null}
           </div>
         ) : null}
 
