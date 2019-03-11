@@ -20,7 +20,7 @@ class Server():
 
     logging.basicConfig(
       level=self.config['loggingLevel'],
-      format='%(relativeCreated)6d %(message)s')
+      format='%(levelname)s: %(message)s')
 
   def serve(self):
     logging.info('observer %s' % __version__)
@@ -39,8 +39,12 @@ class Server():
 
   async def send_state(self, websocket):
     while True:
-      state = await self.game.update()
-      await websocket.send(self.state_event(state))
+      try:
+        state = await self.game.update()
+        await websocket.send(self.state_event(state))
+      except:
+        logging.exception('An error occurred while updating the game state')
+
       await asyncio.sleep(2)
 
   async def respond(self, websocket):
