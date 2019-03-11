@@ -7,7 +7,7 @@ export default class App {
 
     this._components = [];
     this._ws = null;
-    this._wsPort = port || '8765';
+    this._wsPort = port || '8124';
     this._wsReconnectTries = 120;
   }
 

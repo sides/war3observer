@@ -9,7 +9,7 @@ from .game import Game
 class Server():
   def setdefaults(config):
     config.setdefault('loggingLevel', logging.INFO)
-    config.setdefault('port', 8765)
+    config.setdefault('port', 8124)
     config.setdefault('clientSettings', {})
 
     return config
