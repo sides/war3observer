@@ -40,11 +40,11 @@ class Server():
 
   async def send_state_to_client(self, websocket):
     while True:
-      state = None
       try:
         state = await self.game.update()
       except:
         logging.exception('An error occurred while updating the game state')
+        state = None
 
       await websocket.send(self.state_event(state))
       await asyncio.sleep(2)

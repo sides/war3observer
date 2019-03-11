@@ -23,10 +23,10 @@ def main():
   parser.add_argument('--port',
     default=argparse.SUPPRESS,
     help='the port the server will listen on')
-  parser.add_argument('--client-config',
+  parser.add_argument('--client-settings',
     default=argparse.SUPPRESS,
     type=json.loads,
-    dest='clientConfig',
+    dest='clientSettings',
     help='options sent to the client (json)')
 
   args = parser.parse_args()
