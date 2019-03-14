@@ -24,10 +24,8 @@ export default class ResourcePanel extends Component {
           {player.lumber}
         </Resource>
 
-        <Resource
-          icon={icons.supply}
-          class={player.food > player.food_max ? 'color-danger' : ''}>
-          {player.food}{player.food_max > 0 ? ('/' + player.food_max) : ''}
+        <Resource icon={icons.supply}>
+          {player.food}/{player.food_max}
         </Resource>
       </div>
     );
