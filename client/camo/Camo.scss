@@ -26,7 +26,7 @@ $widescreen-decoration-size:   240px !default;
   margin: 1px;
   border-radius: 14px;
   border-image: url('./assets/ui/scoreboard-border.png') #{"7 / 1 / 1px"} stretch;
-  background-color: rgba(0, 0, 0, .65);
+  background-color: rgba(0, 0, 0, .6);
 }
 
 @mixin quantity-label($dimensions) {
