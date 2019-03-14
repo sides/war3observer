@@ -1,0 +1,94 @@
+$resources-overview-height:     59px !default;
+$resources-overview-spacing-y:  3px !default;
+
+$resources-overview-widescreen-decoration-size: 240px !default;
+
+$resources-overview-player-offset-x:  2px !default;
+
+$resources-overview-resource-width:      134px !default;
+$resources-overview-resource-height:     32px !default;
+$resources-overview-resource-icon-width: 32px !default;
+$resources-overview-resource-spacing-x:  23px !default;
+
+.ResourcesOverview {
+  height: $resources-overview-height;
+  position: relative;
+  background: no-repeat top / cover url('./assets/ui/human-resource-panel.png');
+
+  &.ResourcesOverview--orc {
+    background-image: url('./assets/ui/orc-resource-panel.png');
+  }
+
+  &.ResourcesOverview--nightelf {
+    background-image: url('./assets/ui/nightelf-resource-panel.png');
+  }
+
+  &.ResourcesOverview--undead {
+    background-image: url('./assets/ui/undead-resource-panel.png');
+  }
+
+  .ResourcePanel {
+    position: absolute;
+    top: $resources-overview-spacing-y;
+    display: flex;
+
+    .Resource {
+      height: $resources-overview-resource-height;
+      width: $resources-overview-resource-width;
+      display: flex;
+      align-items: center;
+
+      + .Resource {
+        margin-left: $resources-overview-resource-spacing-x;
+      }
+
+      .Resource-icon {
+        width: $resources-overview-resource-icon-width - 2;
+        height: $resources-overview-resource-height - 2;
+      }
+
+      .Resource-label {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: right;
+
+        > span {
+          color: inherit;
+        }
+      }
+
+      @each $team, $color in $teamColors {
+        &.color-#{$team} {
+          @if (yiq($color) < 65) {
+            color: mix($color, #fff);
+          }
+        }
+      }
+    }
+
+    &:first-child {
+      left: ($resources-overview-widescreen-decoration-size +
+            $resources-overview-player-offset-x);
+    }
+
+    &:last-child {
+      // Don't know where the 3px comes from
+      right: ($resources-overview-widescreen-decoration-size +
+             $resources-overview-player-offset-x +
+             3px);
+    }
+
+    @media (aspect-ratio: 4/3) {
+      &:first-child {
+        left: $resources-overview-player-offset-x;
+      }
+
+      &:last-child {
+        right: ($resources-overview-player-offset-x +
+               3px);
+      }
+    }
+  }
+}

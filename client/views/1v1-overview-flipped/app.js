@@ -1,10 +1,5 @@
-import CamoApp from '../../camo/CamoApp';
-import CamoResourcePanelComponent from '../../camo/components/CamoResourcePanelComponent';
-import CamoHeroOverviewComponent from '../../camo/components/CamoHeroOverviewComponent';
+import CamoVersusApp from '../../camo/CamoVersusApp';
 
-const app = new CamoApp({ settings: { reversePlayerOrder: true }});
-
-app.addComponent(new CamoResourcePanelComponent());
-app.addComponent(new CamoHeroOverviewComponent());
+const app = new CamoVersusApp({ settings: { reversePlayerOrder: true }});
 
 export { app };

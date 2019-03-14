@@ -91,12 +91,12 @@ body {
   background-color: $body-bg;
 }
 
-@each $team, $color in $teamColors {
-  .color-#{$team} {
+@each $name, $color in map-merge($themeColors, $teamColors) {
+  .color-#{$name} {
     color: $color;
   }
 
-  .bg-#{$team} {
+  .bg-#{$name} {
     background-color: $color;
     color: color-yiq($color);
   }

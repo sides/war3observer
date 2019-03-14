@@ -1,7 +1,7 @@
 import * as m from 'mithril';
 import Component from '../Component';
 
-export default class ResourceComponent extends Component {
+export default class Resource extends Component {
   view(vnode) {
     return (
       <div class={`Resource ${vnode.attrs.class || ''}`}>

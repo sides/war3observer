@@ -1,0 +1,11 @@
+{
+  "useTeamColors": false,
+  "reversePlayerOrder": false,
+  "hudType": "human",
+  "heroLevelPrecision": 1,
+  "showHeroStatus": true,
+  "showHeroStatusExperience": false,
+  "showHeroAbilities": true,
+  "showHeroItems": true,
+  "showHeroRevivalProgress": false
+}

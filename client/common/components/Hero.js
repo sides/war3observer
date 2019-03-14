@@ -1,9 +1,9 @@
 import * as m from 'mithril';
 import Component from '../Component';
-import Icon from './IconComponent';
-import ProgressComponent from './ProgressComponent';
+import Icon from './Icon';
+import Progress from './Progress';
 
-export default class HeroComponent extends Component {
+export default class Hero extends Component {
   filterHeroAbilities(ability) {
     // Some item abilities have the hero prefix
     return !['AHer', 'ANpr', 'ANsa', 'ANss', 'ANse', 'ANbs', 'AUds'].includes(ability.id)
@@ -21,32 +21,28 @@ export default class HeroComponent extends Component {
 
     const items = hero.inventory;
 
-    const healthComponent = vnode.attrs.healthComponent || ProgressComponent;
-    const manaComponent = vnode.attrs.manaComponent || ProgressComponent;
+    const Healthbar = vnode.attrs.healthComponent || Progress;
+    const Manabar = vnode.attrs.manaComponent || Progress;
 
     return (
       <div class={`Hero ${!hero.hitpoints ? 'Hero--dead' : ''}`} data-id={hero.id}>
-        {vnode.attrs.showPortrait ? (
-          <div class="Hero-portrait">
-            <Icon id={hero.id} class="Hero-icon" />
-            <span class="Hero-level">{hero.level}</span>
-            {vnode.attrs.showStatus ? (
-              <div class="Hero-status">
-                {m(healthComponent, {
-                  type: 'status',
-                  value: hero.hitpoints,
-                  max: hero.hitpoints_max
-                })}
+        <div class="Hero-portrait">
+          <Icon id={hero.id} class="Hero-icon" />
+          <span class="Hero-level">{hero.level}</span>
+          {vnode.attrs.showStatus ? (
+            <div class="Hero-status">
+              <Healthbar
+                type="status"
+                value={hero.hitpoints}
+                max={hero.hitpoints_max} />
 
-                {m(manaComponent, {
-                  type: 'status',
-                  value: hero.mana,
-                  max: hero.mana_max
-                })}
-              </div>
-            ) : null}
-          </div>
-        ) : null}
+              <Manabar
+                type="status"
+                value={hero.mana}
+                max={hero.mana_max} />
+            </div>
+          ) : null}
+        </div>
 
         {vnode.attrs.showAbilities ? (
           <div class="Hero-abilities" data-amount={abilities.length}>

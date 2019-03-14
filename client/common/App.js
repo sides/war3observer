@@ -1,9 +1,14 @@
 import * as m from 'mithril';
+import Component from './Component';
+import defaultSettings from './App.json';
 
-export default class App {
+export default class App extends Component {
   constructor({ port, settings } = {}) {
+    super();
+
     this.game = null;
-    this.settings = settings || {};
+    this.settings = {};
+    Object.assign(this.settings, this.defaultSettings(), settings || {});
 
     this._components = [];
     this._ws = null;
@@ -11,15 +16,15 @@ export default class App {
     this._wsReconnectTries = 120;
   }
 
-  addComponent(component) {
-    this._components.push(component);
+  defaultSettings() {
+    return defaultSettings;
   }
 
   boot() {
     window.addEventListener('beforeunload', e => this._ws && this._ws.close(1000));
     this.connect(this._wsReconnectTries);
 
-    m.mount(document.getElementById('app'), { view: () => this._components.map(m) });
+    m.mount(document.getElementById('app'), this);
   }
 
   connect(tries) {
