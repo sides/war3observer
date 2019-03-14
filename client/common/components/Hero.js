@@ -5,8 +5,8 @@ import Progress from './Progress';
 
 export default class Hero extends Component {
   filterHeroAbilities(ability) {
-    // Some item abilities have the hero prefix
-    return !['AHer', 'ANpr', 'ANsa', 'ANss', 'ANse', 'ANbs', 'AUds'].includes(ability.id)
+    // Some item abilities and buffs have the hero prefix
+    return !['AHer', 'ANpr', 'ANsa', 'ANss', 'ANse', 'ANbs', 'AUds', 'AEtr', 'AEsd'].includes(ability.id)
       && ability.id.match(/^A[HOEUN]/);
   }
 
