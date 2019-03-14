@@ -1,0 +1,144 @@
+$teams-overview-spacing:         10px !default;
+$teams-overview-player-size:     315px !default;
+
+$teams-overview-resource-panel-font-size: 14px !default;
+$teams-overview-resource-panel-icon-size: 20px !default;
+
+$teams-overview-hero-height:      50px !default;
+$teams-overview-hero-spacing:     2px !default;
+$teams-overview-hero-grid-height: ($teams-overview-hero-height + ($teams-overview-hero-spacing * 2)) !default;
+
+.TeamsOverview {
+  .Team {
+    position: absolute;
+    top: $hud-top-height;
+
+    &:first-child {
+      left: $teams-overview-spacing;
+    }
+
+    &:last-child {
+      right: $teams-overview-spacing;
+    }
+  }
+
+  .Player {
+    @include scoreboard();
+
+    width: $teams-overview-player-size;
+
+    + .Player {
+      margin-top: $teams-overview-spacing;
+    }
+  }
+
+  .Player-resources {
+    .ResourcePanel {
+      display: flex;
+      font-size: $teams-overview-resource-panel-font-size;
+
+      .Resource {
+        display: flex;
+        min-width: 0;
+
+        + .Resource {
+          margin-left: $teams-overview-spacing;
+          flex-shrink: 0;
+        }
+
+        .Resource-icon {
+          margin-right: 2px;
+          width: $teams-overview-resource-panel-icon-size;
+          height: $teams-overview-resource-panel-icon-size;
+        }
+
+        .Resource-label {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        @include contrast-team-colors();
+      }
+    }
+  }
+
+  .Player-heroes {
+    .Hero {
+      display: grid;
+      grid-template-columns: $teams-overview-hero-grid-height min-content;
+      grid-gap: $teams-overview-hero-spacing;
+      height: $teams-overview-hero-grid-height;
+      line-height: 1;
+      margin-top: ($teams-overview-spacing * .5);
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .Hero-portrait {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      position: relative;
+
+      .Hero-level {
+        @include quantity-label((
+          "offset-y":   6px,
+          "offset-x":   4px,
+          "size":       20px,
+          "font-size":  16px
+        ));
+      }
+    }
+
+    .Hero-abilities {
+      grid-column: 2;
+      display: flex;
+
+      .Hero-ability {
+        position: relative;
+        width: ($teams-overview-hero-height * .5);
+        height: ($teams-overview-hero-height * .5);
+
+        + .Hero-ability {
+          margin-left: 2px;
+        }
+
+        .Ability-level {
+          @include quantity-label((
+            "offset-y":   1px,
+            "offset-x":   2px,
+            "size":       14px,
+            "font-size":  13px
+          ));
+        }
+      }
+    }
+
+    .Hero-items {
+      grid-column: 2;
+      display: flex;
+
+      .Hero-item {
+        position: relative;
+        width: ($teams-overview-hero-height * .5);
+        height: ($teams-overview-hero-height * .5);
+
+        + .Hero-item {
+          margin-left: $teams-overview-hero-spacing;
+        }
+
+        .Item-charges {
+          @include quantity-label((
+            "offset-y":   1px,
+            "offset-x":   2px,
+            "size":       14px,
+            "font-size":  13px
+          ));
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,41 @@ $themeColors: (
   "danger":  #ff0000
 ) !default;
 
+$hud-top-height:               59px !default;
+$widescreen-decoration-size:   240px !default;
+
+@mixin contrast-team-colors() {
+  @each $team, $color in $teamColors {
+    &.color-#{$team} {
+      @if (yiq($color) < 65) {
+        color: mix($color, #fff);
+      }
+    }
+  }
+}
+
+@mixin scoreboard() {
+  border: 7px solid;
+  margin: 1px;
+  border-radius: 14px;
+  border-image: url('./assets/ui/scoreboard-border.png') #{"7 / 1 / 1px"} stretch;
+  background-color: rgba(0, 0, 0, .65);
+}
+
+@mixin quantity-label($dimensions) {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: map-get($dimensions, "offset-y");
+  right: map-get($dimensions, "offset-x");
+  background: no-repeat center / cover url('./assets/ui/icon-level.png');
+  width: map-get($dimensions, "size");
+  height: map-get($dimensions, "size");
+  font-size: map-get($dimensions, "font-size");
+  line-height: 1;
+}
+
 
 // Base app styles
 //
@@ -40,3 +75,4 @@ $themeColors: (
 //
 @import "./components/CamoResourcesOverview";
 @import "./components/CamoHeroesOverview";
+@import "./components/CamoTeamsOverview.scss";

@@ -32,20 +32,6 @@ $heroes-overview-item-quantity-label: (
   "font-size":                13px
 ) !default;
 
-@mixin quantity-label($dimensions) {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  bottom: map-get($dimensions, "offset-y");
-  right: map-get($dimensions, "offset-x");
-  background: no-repeat center / cover url('./assets/ui/icon-level.png');
-  width: map-get($dimensions, "size");
-  height: map-get($dimensions, "size");
-  font-size: map-get($dimensions, "font-size");
-  line-height: 1;
-}
-
 .HeroesOverview {
   position: relative;
 

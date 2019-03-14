@@ -1,7 +1,7 @@
-$resources-overview-height:     59px !default;
+$resources-overview-height:     $hud-top-height !default;
 $resources-overview-spacing-y:  3px !default;
 
-$resources-overview-widescreen-decoration-size: 240px !default;
+$resources-overview-widescreen-decoration-size: $widescreen-decoration-size !default;
 
 $resources-overview-player-offset-x:  2px !default;
 
@@ -59,13 +59,7 @@ $resources-overview-resource-spacing-x:  23px !default;
         }
       }
 
-      @each $team, $color in $teamColors {
-        &.color-#{$team} {
-          @if (yiq($color) < 65) {
-            color: mix($color, #fff);
-          }
-        }
-      }
+      @include contrast-team-colors();
     }
 
     &:first-child {
