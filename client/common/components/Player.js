@@ -1,6 +1,5 @@
 import * as m from 'mithril';
 import { getPlayerColor } from '../utils/color';
-import { isInGame, getPlayers } from '../utils/game';
 import Component from '../Component';
 import Hero from './Hero';
 import ResourcePanel from './ResourcePanel';

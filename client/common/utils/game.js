@@ -26,3 +26,28 @@ export function getHudType() {
 
   return app.settings.hudType;
 }
+
+export function getHeroLevelProgress(hero) {
+  if (!hero.level) {
+    return 0;
+  }
+
+  // Make these settings if they need to change (in e.g. a custom map).
+  // They're found in the gameplay constants table. I'm not fully sure
+  // what the `NeedHeroXPFormulaA` and `NeedHeroXPFormulaC` modifiers
+  // do.
+  let baseXp = 200;
+  const xpDelta = 100;
+
+  let level = 1;
+  let currentLevelXp = 0;
+
+  // Rev up your fibonaccis
+  while (level < hero.level) {
+    currentLevelXp += baseXp;
+    baseXp += xpDelta;
+    level++;
+  }
+
+  return (hero.experience - currentLevelXp) / (hero.experience_max - currentLevelXp);
+}

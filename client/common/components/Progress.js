@@ -11,7 +11,7 @@ export default class Progress extends Component {
   }
 
   view(vnode) {
-    const { type, value, max, morpher=this.morph } = vnode.attrs;
+    const { type, value, max=1, morpher=this.morph } = vnode.attrs;
 
     return (
       <div class={`Progress Progress--${type}`}>

@@ -10,8 +10,8 @@ $heroes-overview-portrait-icon-height:  68px !default;
 $heroes-overview-portrait-quantity-label: (
   "offset-y":                         21px,
   "offset-x":                         4px,
-  "size":                             20px,
-  "font-size":                        16px
+  "size":                             22px,
+  "font-size":                        15px
 ) !default;
 
 $heroes-overview-ability-padding:  1px !default;
@@ -67,6 +67,10 @@ $heroes-overview-item-quantity-label: (
 
         .Hero-level {
           @include quantity-label($heroes-overview-portrait-quantity-label);
+
+          .Level-fraction {
+            font-size: 80%;
+          }
         }
 
         .Hero-status {

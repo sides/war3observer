@@ -1,4 +1,5 @@
 import * as m from 'mithril';
+import { getHeroLevelProgress } from '../utils/game';
 import Component from '../Component';
 import Icon from './Icon';
 import Progress from './Progress';
@@ -8,6 +9,14 @@ export default class Hero extends Component {
     // Some item abilities and buffs have the hero prefix
     return !['AHer', 'ANpr', 'ANsa', 'ANss', 'ANse', 'ANbs', 'AUds', 'AEtr', 'AEsd'].includes(ability.id)
       && ability.id.match(/^A[HOEUN]/);
+  }
+
+  getXpFraction(percent) {
+    if (app.settings.heroLevelPrecision <= 0) {
+      return 0;
+    }
+
+    return Math.floor(percent * app.settings.heroLevelPrecision * 10) / (app.settings.heroLevelPrecision * 10) * 10;
   }
 
   view(vnode) {
@@ -21,16 +30,32 @@ export default class Hero extends Component {
 
     const items = hero.inventory;
 
+    const xpProgress = getHeroLevelProgress(hero);
+    const xpFraction = this.getXpFraction(xpProgress);
+
     const Healthbar = vnode.attrs.healthComponent || Progress;
     const Manabar = vnode.attrs.manaComponent || Progress;
+    const Experiencebar = vnode.attrs.experienceComponent || Progress;
 
     return (
       <div class={`Hero ${!hero.hitpoints ? 'Hero--dead' : ''}`} data-id={hero.id}>
         <div class="Hero-portrait">
           <Icon id={hero.id} class="Hero-icon" />
-          <span class="Hero-level">{hero.level}</span>
+          <span class="Hero-level">
+            {hero.level}
+            {xpFraction > 0 ? (
+              <span class="Level-fraction">.{xpFraction}</span>
+            ) : null}
+          </span>
+
           {vnode.attrs.showStatus ? (
             <div class="Hero-status">
+              {vnode.attrs.showStatusExperience ? (
+                <Experiencebar
+                  type="status"
+                  value={xpProgress} />
+              ) : null}
+
               <Healthbar
                 type="status"
                 value={hero.hitpoints}
