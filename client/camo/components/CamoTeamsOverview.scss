@@ -90,13 +90,13 @@ $teams-overview-hero-grid-height: ($teams-overview-hero-height + ($teams-overvie
         height: ($teams-overview-hero-height * .5);
 
         + .Hero-ability {
-          margin-left: 2px;
+          margin-left: $teams-overview-hero-spacing;
         }
 
         .Ability-level {
           @include quantity-label((
             "offset-y":   1px,
-            "offset-x":   2px,
+            "offset-x":   1px,
             "size":       14px,
             "font-size":  13px
           ));
@@ -119,7 +119,7 @@ $teams-overview-hero-grid-height: ($teams-overview-hero-height + ($teams-overvie
         .Item-charges {
           @include quantity-label((
             "offset-y":   1px,
-            "offset-x":   2px,
+            "offset-x":   1px,
             "size":       14px,
             "font-size":  13px
           ));
