@@ -39,6 +39,7 @@ $teams-overview-hero-grid-height: ($teams-overview-hero-height + ($teams-overvie
 
       .Resource {
         display: flex;
+        align-items: center;
         min-width: 0;
 
         + .Resource {

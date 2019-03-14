@@ -3,7 +3,7 @@ import * as m from 'mithril';
 import App from '../common/App';
 import CamoTeamsOverview from './components/CamoTeamsOverview';
 
-export default class CamoVersusApp extends App {
+export default class CamoTeamVersusApp extends App {
   defaultSettings() {
     return Object.assign(super.defaultSettings(), {
       heroLevelPrecision: 0,
