@@ -1,5 +1,5 @@
-$teams-overview-spacing:         10px !default;
-$teams-overview-player-size:     300px !default;
+$teams-overview-spacing:         5px !default;
+$teams-overview-player-size:     280px !default;
 
 $teams-overview-resource-panel-font-size: 14px !default;
 $teams-overview-resource-panel-icon-size: 20px !default;
@@ -17,13 +17,14 @@ $teams-overview-hero-grid-height: ($teams-overview-hero-height + ($teams-overvie
       max-width: $teams-overview-player-size;
 
       + .Player {
-        margin-top: $teams-overview-spacing;
+        margin-top: ($teams-overview-spacing * 2);
       }
     }
 
     .ResourcePanel {
       display: inline-flex;
       font-size: $teams-overview-resource-panel-font-size;
+      max-width: 100%;
 
       @include scoreboard();
 
@@ -58,7 +59,7 @@ $teams-overview-hero-grid-height: ($teams-overview-hero-height + ($teams-overvie
       grid-gap: $teams-overview-hero-spacing;
       height: $teams-overview-hero-grid-height;
       line-height: 1;
-      margin-top: ($teams-overview-spacing * .5);
+      margin-top: $teams-overview-spacing;
 
       &.Hero--dead {
         filter: $heroes-overview-portrait-dead-filter;
