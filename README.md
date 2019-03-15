@@ -21,7 +21,7 @@ It runs a local websocket server which sends a message with the entire state per
 You generally shouldn't, but if you experience the overlay not updating properly, you can try any of these:
 
 - Restart `war3observer.exe` (after you've started Warcraft III)
-- Refresh the browser cache in OBS (double-click on the source, hit OK)
+- Refresh the browser cache in OBS (`Refresh cache of current page` on the source)
 
 
 ### Updating
@@ -38,7 +38,7 @@ For advanced options you can create a file called `war3observer.config.json` in 
   "port": 8657,
   "clientSettings": {
     "useTeamColors": true,
-    "hideHeroItems": true,
+    "showHeroItems": false,
     "reversePlayerOrder": true
   }
 }
