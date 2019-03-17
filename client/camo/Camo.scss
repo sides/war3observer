@@ -65,7 +65,7 @@ $widescreen-decoration-size:   240px !default;
       height: 100%;
       background-image: url('./assets/ui/statusbar-fill.png');
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: 100% 100%;
     }
   }
 }
