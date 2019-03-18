@@ -105,9 +105,11 @@ class Game():
       if player.type == "PLAYER" or player.type == "COMPUTER":
         self._player_mms.append(mm)
         if len(self._player_mms) >= count:
-          break
+          return
       else:
         mm.close()
+
+    raise Exception("Attempted to find %s players but found only %s" % (count, len(self._player_mms)))
 
   def close(self):
     """Close the game's file handles and clear the state"""
