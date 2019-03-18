@@ -102,7 +102,7 @@ class Game():
     for i in range(0, 23):
       mm = SharedMemoryFile(4+self._game_size+self._player_size*i, self._player_size)
       player = ObserverPlayer.parse(mm.data())
-      if player.type == "PLAYER" or player.type == "COMPUTER":
+      if player.slot_state == "PLAYING":
         self._player_mms.append(mm)
         if len(self._player_mms) >= count:
           return
