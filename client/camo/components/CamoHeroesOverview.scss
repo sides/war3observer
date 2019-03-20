@@ -75,11 +75,11 @@ $heroes-overview-item-quantity-label: (
 
         .Hero-status {
           position: absolute;
-          bottom: 1px;
+          bottom: 0;
           left: -1px;
           background-color: #000;
           padding: 1px 2px 2px 1px;
-          height: 16px;
+          height: 17px;
           display: flex;
           flex-direction: column;
 
