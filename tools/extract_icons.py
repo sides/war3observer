@@ -55,7 +55,7 @@ def extract_icons(installation_dir, out_dir):
   print('Collecting icons...')
 
   for txt in included:
-    contents = wc3.read('war3.mpq:units\\%s' % txt).decode('utf-8')
+    contents = wc3.read('war3.w3mod:units\\%s' % txt).decode('utf-8')
 
     # Syntax errors
     contents = contents.replace('/ Stuffed Penguin\r\n', '')
@@ -73,7 +73,7 @@ def extract_icons(installation_dir, out_dir):
   for id_, path in icons.items():
     out_path = os.path.join(out_dir, id_ + '.jpg')
 
-    blp_data = wc3.read('war3.mpq:%s' % path.lower())
+    blp_data = wc3.read('war3.w3mod:%s' % path.lower())
 
     with open(out_path, 'wb') as fh:
       fh.write(jpgblp2jpg(blp_data))
