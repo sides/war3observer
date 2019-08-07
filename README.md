@@ -20,7 +20,7 @@ It runs a local websocket server which sends a message with the entire state per
 
 You generally shouldn't, but if you experience the overlay not updating properly, you can try any of these:
 
-- Restart `war3observer.exe` (after you've started Warcraft III)
+- Close both Warcraft III and `war3observer.exe` and then restart them in that order
 - Refresh the browser cache in OBS (`Refresh cache of current page` on the source)
 
 
