@@ -54,7 +54,8 @@ class Server():
     async for message in websocket:
       data = json.loads(message)
       if data['action'] == 'setClientSettings':
-        await websocket.send(self.settings_event(data['content']))
+        for other_websocket in self._clients:
+          asyncio.create_task(other_websocket.send(self.settings_event(data['content'])))
 
   async def connect_client(self, websocket, path):
     logging.debug('observer - Client connected')
