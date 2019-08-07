@@ -20,6 +20,9 @@ def main():
     dest='loggingLevel',
     metavar='LOGGINGLEVEL',
     help='the logging level to use')
+  parser.add_argument('--host',
+    default=argparse.SUPPRESS,
+    help='the address the server will listen on')
   parser.add_argument('--port',
     default=argparse.SUPPRESS,
     help='the port the server will listen on')

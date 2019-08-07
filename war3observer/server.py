@@ -9,6 +9,7 @@ from .game import Game
 class Server():
   def setdefaults(config):
     config.setdefault('loggingLevel', logging.INFO)
+    config.setdefault('host', 'localhost')
     config.setdefault('port', 8124)
     config.setdefault('clientSettings', {})
 
@@ -27,7 +28,7 @@ class Server():
     logging.info('observer %s' % __version__)
     logging.debug('observer - Starting with config %s' % self.config)
 
-    start_server = websockets.serve(self.connect_client, 'localhost', self.config['port'])
+    start_server = websockets.serve(self.connect_client, self.config['host'], self.config['port'])
 
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()

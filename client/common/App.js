@@ -3,16 +3,17 @@ import Component from './Component';
 import defaultSettings from './App.json';
 
 export default class App extends Component {
-  constructor({ port, settings } = {}) {
+  constructor({ host, port, settings } = {}) {
     super();
 
     this.game = null;
     this.settings = {};
     Object.assign(this.settings, this.defaultSettings(), settings || {});
 
-    this._components = [];
+    this.host = host || 'localhost';
+    this.port = port || '8124';
+
     this._ws = null;
-    this._wsPort = port || '8124';
     this._wsReconnectTries = 120;
   }
 
@@ -28,7 +29,7 @@ export default class App extends Component {
   }
 
   connect(tries) {
-    this._ws = new WebSocket(`ws://localhost:${this._wsPort}/`);
+    this._ws = new WebSocket(`ws://${this.host}:${this.port}/`);
     this._ws.onmessage = this.onmessage.bind(this);
 
     if (tries > 0) {
