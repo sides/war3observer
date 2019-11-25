@@ -2,14 +2,14 @@
 
 war3observer is a tool that keeps a local webpage updated with data from the Warcraft III observer API. This can be used for streaming tools such as OBS to render the data on stream.
 
-It runs a local websocket server which sends a message with the entire state periodically. It uses [war3structs](https://github.com/warlockbrawl/war3structs) to parse the state from the memory mapped file. A web client written in [mithril.js](https://github.com/MithrilJS/mithril.js/) is included to render the state.
+It runs a local websocket server which sends a message with the entire state periodically. It uses [war3structs](https://github.com/sides/war3structs) to parse the state from the memory mapped file. A web client written in [mithril.js](https://github.com/MithrilJS/mithril.js/) is included to render the state.
 
 ![screenshot example](/screenshots/replay-example.jpg)
 
 
 ## Usage
 
-- [Download the latest release](https://github.com/warlockbrawl/war3observer/releases)
+- [Download the latest release](https://github.com/sides/war3observer/releases)
 - Extract it somewhere
 - In OBS, add a browser source to your scene, tick `Local file` and select any of the `.html` files in the `client` folder you extracted
 - Set the width and height to 1920x1080 for 16:9, 1440x1080 for 4:3, scale it in OBS as needed
@@ -55,7 +55,7 @@ It's possible to control the overlay beyond OBS scenes with an external program.
 ## Development
 
 - Have [Python 3](https://www.python.org/), [node](https://nodejs.org/en/), and Warcraft III installed
-- `git clone https://github.com/warlockbrawl/war3observer.git`
+- `git clone https://github.com/sides/war3observer.git`
 - `cd war3observer`
 - `pip install -r requirements.txt -r requirements-dev.txt`
 - `python -m war3observer` to start the server

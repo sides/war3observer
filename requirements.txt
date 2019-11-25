@@ -1,2 +1,2 @@
 websockets
-git+https://github.com/warlockbrawl/war3structs.git
+git+https://github.com/sides/war3structs.git
