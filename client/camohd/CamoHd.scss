@@ -1,0 +1,22 @@
+$widescreen-decoration-size:   245px !default;
+
+$resources-overview-resource-width:      130px !default;
+$resources-overview-resource-spacing-x:  27px !default;
+
+@import "../camo/Camo";
+
+.ResourcesOverview {
+  background-image: url('./assets/ui/human-resource-panel.png');
+
+  &.ResourcesOverview--orc {
+    background-image: url('./assets/ui/orc-resource-panel.png');
+  }
+
+  &.ResourcesOverview--nightelf {
+    background-image: url('./assets/ui/nightelf-resource-panel.png');
+  }
+
+  &.ResourcesOverview--undead {
+    background-image: url('./assets/ui/undead-resource-panel.png');
+  }
+}

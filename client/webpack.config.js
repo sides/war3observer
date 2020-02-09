@@ -44,7 +44,7 @@ module.exports = {
         use: {
           loader: 'file-loader',
           options: {
-            name: 'assets/[name].[ext]'
+            name: 'assets/[hash].[ext]'
           }
         }
       }
@@ -56,12 +56,6 @@ module.exports = {
     path: path.resolve(process.cwd(), 'dist'),
     publicPath: '',
     libraryTarget: 'window'
-  },
-
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
-    }
   },
 
   plugins: [

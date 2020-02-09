@@ -1,5 +1,6 @@
 import asyncio
 import mmap
+import struct
 
 from war3structs.observer import ObserverGame, ObserverPlayer
 
@@ -12,18 +13,22 @@ class SharedMemoryFile():
   method.
   """
 
-  def __init__(self, offset, size):
+  def __init__(self, offset, size, write=False):
     self._seek_offset = offset % mmap.ALLOCATIONGRANULARITY
     self._mmap = mmap.mmap(
       -1,
       (size + self._seek_offset),
       "War3StatsObserverSharedMemory",
       offset=(offset - self._seek_offset),
-      access=mmap.ACCESS_READ)
+      access=(mmap.ACCESS_WRITE if write else mmap.ACCESS_READ))
 
   def data(self):
     self._mmap.seek(self._seek_offset)
     return self._mmap.read()
+
+  def write_data(self, data):
+    self._mmap.seek(self._seek_offset)
+    self._mmap.write(data)
 
   def close(self):
     self._mmap.close()
@@ -35,6 +40,7 @@ class Game():
   A game updates the state from the observer API.
   """
 
+  _refresh_rate = 2000
   _game_size = ObserverGame.sizeof()
   _player_size = ObserverPlayer.sizeof()
 
@@ -43,6 +49,11 @@ class Game():
     self._player_mms = []
 
     self.state = dict(game=dict(is_in_game=False), players=[])
+
+    # Set the refresh rate of the API to start listening.
+    mm = SharedMemoryFile(4, 4, write=True)
+    mm.write_data(struct.pack("<I", self._refresh_rate))
+    mm.close()
 
   def _get_game_state(self):
     if self._game_mm is None:

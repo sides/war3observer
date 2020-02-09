@@ -8,49 +8,28 @@ from PIL import Image
 from war3structs.storage import CascStore
 from war3structs.plaintext import TxtParser
 
-def flipbgrrgb(data):
-  # TODO: This is going a long way for this relatively simple task and
-  #       some detail gets lost. Need to be not a compression noob and
-  #       do this right.
+def dds2jpg(data, resize=False):
   jpg = Image.open(io.BytesIO(data))
-  jpg = jpg.convert('RGBA')
-  b, g, r, a = jpg.split()
-  jpg = Image.merge('RGBA', (r, g, b, a)).convert('YCbCr')
+
+  if resize:
+    jpg = jpg.resize((resize, resize), Image.BICUBIC)
+
+  jpg = jpg.convert('YCbCr')
   out_jpg = io.BytesIO()
   jpg.save(out_jpg, format='JPEG')
 
   return out_jpg.getvalue()
 
-def jpgblp2jpg(data):
-  # Unfancy method to get the jpg part from jpg-blp.
-  stream = io.BytesIO(data)
-  stream.seek(28)
-  first_mipmap_offset = struct.unpack('<i', stream.read(4))[0]
-
-  stream.seek(60, io.SEEK_CUR)
-  first_mipmap_size = struct.unpack('<i', stream.read(4))[0]
-
-  stream.seek(60, io.SEEK_CUR)
-  jpg_h_size = struct.unpack('<i', stream.read(4))[0]
-  jpg_h = stream.read(jpg_h_size)
-
-  stream.seek(first_mipmap_offset)
-  jpg_data = stream.read(first_mipmap_size)
-
-  return flipbgrrgb(jpg_h + jpg_data)
-
 def extract_icons(installation_dir, out_dir):
   included = [
-    'commonabilityfunc.txt',
-    'humanabilityfunc.txt', 'humanunitfunc.txt', 'humanupgradefunc.txt',
-    'itemabilityfunc.txt', 'itemfunc.txt',
-    'neutralabilityfunc.txt', 'neutralunitfunc.txt', 'neutralupgradefunc.txt',
-    'nightelfabilityfunc.txt', 'nightelfunitfunc.txt', 'nightelfupgradefunc.txt',
-    'orcabilityfunc.txt', 'orcunitfunc.txt', 'orcupgradefunc.txt',
-    'undeadabilityfunc.txt', 'undeadunitfunc.txt', 'undeadupgradefunc.txt']
+    'abilityskin.txt', 'unitskin.txt', 'itemfunc.txt',
+    'humanupgradefunc.txt', 'neutralupgradefunc.txt', 'nightelfupgradefunc.txt',
+    'orcupgradefunc.txt', 'undeadupgradefunc.txt'
+  ]
 
   wc3 = CascStore(installation_dir)
   icons = {}
+  iconsHd = {}
 
   print('Collecting icons...')
 
@@ -59,24 +38,72 @@ def extract_icons(installation_dir, out_dir):
 
     # Syntax errors
     contents = contents.replace('/ Stuffed Penguin\r\n', '')
+    contents = contents.replace('\r\nUnits\\Creeps\\MishaLvl1\\MishaLvl1\r\n', '\r\n')
+    contents = contents.replace('\r\nstormreaverhermit\r\n', '\r\n')
+    contents = contents.replace('Art=ReplaceableTextures\\CommandButtons\\BTNMalFurionWithoutStag.blp\r\n', '')
 
     config = TxtParser.parse(contents)
     for section in config:
-      art = config[section].get('Art', None)
-      if not art is None and len(art.strip()) > 0:
-        art = art.split(',')[0]
-        icons[section] = art
+      # Unused in melee
+      if section in ['Aoth', 'Nmsr', 'Hddt']:
         continue
 
-  print('Extracting icons...')
+      foundHdArt = False
+      artHd = config[section].get('Art:hd', None)
+      art = config[section].get('Art', None)
+
+      # Add the hd icon to the list, if any is found.
+      if not artHd is None and len(artHd.strip()) > 0:
+        artHd = artHd.split(',')[0]
+        iconsHd[section] = artHd.replace('.blp', '.dds')
+        foundHdArt = True
+
+      # Add the sd icon to the list.
+      if not art is None and len(art.strip()) > 0:
+        art = art.split(',')[0]
+        icons[section] = art.replace('.blp', '.dds')
+
+        # If this id had no hd counterpart, add this to the hd list
+        # as well.
+        if not foundHdArt:
+          iconsHd[section] = icons[section]
+
+      # If an hd icon exists but not an sd icon, it must be a skin.
+      # Fall back on the source icon.
+      elif foundHdArt:
+        skinnableId = config[section].get('skinnableID', None)
+
+        # If there's no source icon or the source icon is the same as
+        # this icon, this just gets skipped.
+        if not skinnableId is None and len(skinnableId.strip()) > 0 and skinnableId != section:
+          sourceArt = config[skinnableId].get('Art', None)
+          if not sourceArt is None and len(sourceArt.strip()) > 0:
+            sourceArt = sourceArt.split(',')[0]
+            icons[section] = sourceArt.replace('.blp', '.dds')
+
+  print('Extracting SD icons...')
 
   for id_, path in icons.items():
     out_path = os.path.join(out_dir, id_ + '.jpg')
 
-    blp_data = wc3.read('war3.w3mod:%s' % path.lower())
+    dds_data = wc3.read('war3.w3mod:%s' % path.lower())
 
     with open(out_path, 'wb') as fh:
-      fh.write(jpgblp2jpg(blp_data))
+      fh.write(dds2jpg(dds_data))
+
+  print('Extracting HD icons...')
+
+  for id_, path in iconsHd.items():
+    out_path = os.path.join(out_dir, 'hd', id_ + '.jpg')
+
+    # Some icons only exist in sd.
+    if id_ in ['ANia']:
+      dds_data = wc3.read('war3.w3mod:%s' % path.lower())
+    else:
+      dds_data = wc3.read('war3.w3mod:_hd.w3mod:%s' % path.lower())
+
+    with open(out_path, 'wb') as fh:
+      fh.write(dds2jpg(dds_data, resize=128))
 
 def main():
   try:

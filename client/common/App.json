@@ -7,5 +7,6 @@
   "showHeroStatusExperience": false,
   "showHeroAbilities": true,
   "showHeroItems": true,
-  "showHeroRevivalProgress": false
+  "showHeroRevivalProgress": false,
+  "iconRoot": "icons/"
 }
