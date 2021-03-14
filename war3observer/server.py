@@ -12,13 +12,14 @@ class Server():
     config.setdefault('host', 'localhost')
     config.setdefault('port', 8124)
     config.setdefault('clientSettings', {})
+    config.setdefault('refreshRate', 2000)
 
     return config
 
   def __init__(self, config):
     self._clients = set()
     self.config = Server.setdefaults(config)
-    self.game = Game()
+    self.game = Game(self.config['refreshRate'])
 
     logging.basicConfig(
       level=self.config['loggingLevel'],
@@ -48,7 +49,7 @@ class Server():
         state = None
 
       await websocket.send(self.state_event(state))
-      await asyncio.sleep(2)
+      await asyncio.sleep(self.config['refreshRate'] / 1000)
 
   async def receive_client_messages(self, websocket):
     async for message in websocket:

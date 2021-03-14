@@ -44,9 +44,10 @@ class Game():
   _game_size = ObserverGame.sizeof()
   _player_size = ObserverPlayer.sizeof()
 
-  def __init__(self):
+  def __init__(self, refresh_rate):
     self._game_mm = None
     self._player_mms = []
+    self._refresh_rate = refresh_rate
 
     self.state = dict(game=dict(is_in_game=False), players=[])
 

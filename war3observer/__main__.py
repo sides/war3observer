@@ -34,8 +34,10 @@ def main():
 
   args = parser.parse_args()
 
-  if os.path.isfile(args.config):
-    with open(args.config, 'r') as json_file:
+  path = os.path.join(os.path.dirname(__file__), args.config)
+
+  if os.path.isfile(path):
+    with open(path, 'r') as json_file:
       config = json.load(json_file)
   else:
     config = {}
